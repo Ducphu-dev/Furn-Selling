@@ -296,6 +296,7 @@ class Index extends React.Component {
             })
             this.setState({
                 productsList: this.state.productsList,
+                amount_product_details: 1,
                 amount_product_add: product,
                 sideShop_isShow: true,
             }, () => {
