@@ -4,7 +4,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## First install node_module
 
-Open project and open terminal tpye `npm install`
+Open project and open terminal type
+
+###`npm install`
 
 ## Available Scripts
 
