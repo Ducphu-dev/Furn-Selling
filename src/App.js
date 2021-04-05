@@ -346,7 +346,7 @@ class Index extends React.Component {
             }, () => {
                 this.saveToLocalStorage()
             })
-        } if (indedIndex.product_amount === 0) {
+        } if (findedIndex.product_amount === 0) {
             this.deleteProduct(id)
             this.saveToLocalStorage()
         }
