@@ -332,7 +332,7 @@ class Index extends React.Component {
             this.saveToLocalStorage()
             console.log(this.state.productsList)
         })
-        findedIndex.product_amount = 0
+        findedIndex.product_amount = 1
         console.log(this.state.productsList)
     }
 
