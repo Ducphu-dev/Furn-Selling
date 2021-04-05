@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Open project and open terminal type
 
-###`npm install`
+### `npm install`
 
 ## Available Scripts
 
