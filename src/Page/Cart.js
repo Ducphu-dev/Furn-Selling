@@ -35,7 +35,7 @@ function CartPage(props) {
                                     </h1>
                             </div>
                             <div className="main-stage__listpage ml-auto ">
-                                <ul className="d-flex align-items-center">
+                                <ul className="d-flex align-items-center list-breakcrumb">
                                     <li >
                                         <a href="" className="active">Home</a>
                                     </li>
@@ -70,7 +70,7 @@ function CartPage(props) {
 
                                 amount_product_add.map((product) => {
                                     return (
-                                        <Cart
+                                        <Cart key={product._id}
                                             product={product}
                                             amount={amount}
                                             deleteProduct={deleteProduct}

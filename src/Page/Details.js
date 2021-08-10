@@ -12,6 +12,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as productAction from '../actions/productAction'
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+
 import React from 'react';
 
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -38,7 +41,7 @@ function DetailPage(props) {
                                 </h1>
                             </div>
                             <div className="main-stage__listpage ml-auto ">
-                                <ul className="d-flex align-items-center">
+                                <ul className="d-flex align-items-center list-breakcrumb">
                                     <li>
                                         <a href="index.html" className="active">Home</a>
                                     </li>
@@ -54,8 +57,8 @@ function DetailPage(props) {
                     </div>
                 </div>
 
-                <div className="main-cart">
-                    <div className="container products-detail py-5">
+                <div className="main-cart container">
+                    <div className=" products-detail py-5">
                         {/* <!-- product detail start --> */}
                         {
                             findedIndexViewDetail.map((product) => {
@@ -81,35 +84,80 @@ function DetailPage(props) {
                         <div className="same-item my-5">
                             <h1>You Might Also Like</h1>
                             <div className="row products py-4">
+                            <Swiper
+                                    slidesPerView={2}
+                                    navigation
+                                    className="Swiper-sale"
+                                    breakpoints={{
+                                        // when window width is >= 640px
+                                        769: {
+                                          slidesPerView: 3,
+                                        },
+                                        // when window width is >= 768px
+                                        992: {
+                                          slidesPerView: 4,
+                                        }}
+                                    }
+                                >
                                 {
-                                    recommend.map((product, index) => {
+                                    
+                                    productsList.map((product, index) => {
                                         return (
-                                            <Product
+                                            <SwiperSlide>
+                                                <Product
                                                 addProduct={addProduct}
                                                 product={product}
                                                 viewProduct={viewProduct}
                                             />
+                                            </SwiperSlide>
+                                            
                                         )
                                     })
+                                        
                                 }
-
+                        
+                            </Swiper>
+                              
                             </div>
                         </div>
 
                         <div className="same-item my-5">
                             <h1>12 Other Products In The Same Category:</h1>
                             <div className="row products py-4 " >
-                                {
-                                    recommend.map((product, index) => {
-                                        return (
-                                            <Product
-                                                addProduct={addProduct}
-                                                product={product}
-                                                viewProduct={viewProduct}
-                                            />
-                                        )
-                                    })
-                                }
+                                <Swiper
+                                        slidesPerView={2}
+                                        navigation
+                                        className="Swiper-sale"
+                                        breakpoints={{
+                                            // when window width is >= 640px
+                                            769: {
+                                              slidesPerView: 3,
+                                            },
+                                            // when window width is >= 768px
+                                            992: {
+                                              slidesPerView: 4,
+                                            }}
+                                        }
+                                    >
+                                    {
+                                        
+                                        productsList.map((product, index) => {
+                                            return (
+                                                <SwiperSlide>
+                                                    <Product
+                                                    addProduct={addProduct}
+                                                    product={product}
+                                                    viewProduct={viewProduct}
+                                                />
+                                                </SwiperSlide>
+                                                
+                                            )
+                                        })
+                                            
+                                    }
+                            
+                                </Swiper>
+                                
 
                             </div>
                         </div>

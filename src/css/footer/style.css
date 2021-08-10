@@ -28,12 +28,22 @@ footer{
         transition: 0.3s;
         color: rgb(226, 107, 10);
     }
-    footer .footer-news *{
+    /* footer .footer-news *{
         margin-bottom: 20px;
+    } */
+
+    footer .footer-news .email-send{
+        border: solid 1px ;
+        border-color:rgb(226, 107, 10) ;
+        width: 100%;
+        display: flex;
+        
     }
     footer .footer-news input{
+        flex: 0 0 70%;
+        width:70%;
         background-color: #2f333a;
-        border: solid 0.4px;
+        border: none;
         border-color:rgb(226, 107, 10) ;
     }
     footer .footer-news a{
@@ -41,11 +51,15 @@ footer{
         color: white;
         font-size: 15px;
         border-radius: 0px;
+        border: solid 1 rgb(226, 107, 10);
+        flex: 0 0 30%;
+        width:30%;
     }
     footer .footer-news a:hover{
         color: white;
         opacity: 0.8;
         transition: 0.2s;
+        
     }
     @media only screen and (max-width: 768px) {
         footer .footer-news input{

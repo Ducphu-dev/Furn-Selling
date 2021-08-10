@@ -29,7 +29,7 @@ function SuccessPage(props) {
                                 </h1>
                             </div>
                             <div className="main-stage__listpage ml-auto ">
-                                <ul className="d-flex align-items-center">
+                                <ul className="d-flex align-items-center list-breakcrumb">
                                     <li >
                                         <a href="" className="active">Home</a>
                                     </li>
@@ -61,14 +61,14 @@ function SuccessPage(props) {
                                         <div>
                                             {
                                                 amount_product_add.map(product => (
-                                                    <p key={product.product_id} className="checkout-product">{product.product_name}  x  {product.product_amount} </p>
+                                                    <p key={product._id} className="checkout-product">{product.product_name}  x  {product.product_amount} </p>
                                                 ))
                                             }
                                         </div>
                                         <div className="ml-auto">
                                             {
                                                 amount_product_add.map(product => (
-                                                    <p key={product.product_id} className="checkout-product">
+                                                    <p key={product._id} className="checkout-product">
                                                         {
                                                             `$${Math.ceil((product.product_price - Math.ceil(product.product_price * (product.product_sale / 100))) * product.product_amount)}`
                                                         }

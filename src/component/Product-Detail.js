@@ -1,6 +1,8 @@
 
 import '../App.css';
 import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
 
 function Product_Detail(props) {
 
@@ -16,19 +18,33 @@ function Product_Detail(props) {
     }
 
     return (
-        <div>
-            <div className="row" key={product.product_id}>
+        <div key={product._id} className="px-3">
+            <div className="row" >
                 <div className="products-detail__img col-md-5">
                     <div className="img-preview">
                         <img src={product.product_img}></img>
                     </div>
                     <div className="img-small-preview my-2 d-flex" >
-                        <img src={product.product_img} className="m-2" alt=""></img>
-                        <img src={product.product_img} className="m-2" alt=""></img>
-                        <img src={product.product_img} className="m-2" alt=""></img>
-                        <img src={product.product_img} className="m-2" alt=""></img>
-                        <img src={product.product_img} className="m-2" alt=""></img>
-                    </div>
+                    <Swiper
+                            slidesPerView={4}
+                            navigation
+                            className="Swiper-sale"
+                            spaceBetween= {10}
+                            >
+                            {
+                                
+                                product.product_img_slide.map((product, index) => {
+                                    return (
+                                        <SwiperSlide key={product._id}>
+                                            <img src={product} className="" alt=""></img>
+                                        </SwiperSlide>
+                                      )
+                                })
+                                    
+                            }
+                    
+                        </Swiper>
+                        </div>
                 </div>
 
                 <div className="products-detail__infor col-md-7">
@@ -49,7 +65,7 @@ function Product_Detail(props) {
                                         <i className="fa fa-minus" aria-hidden="true"></i>
                                     </button>
                                 </span>
-                                <input type="text" name="quant[1]" className=" border-0 input-number text-center" onChange={add_more_product} value={amount_product_details} />
+                                <div  className=" border-0 input-number text-center" onChange={()=>add_more_product()} defaultValue="a">{amount_product_details}</div>
                                 <span className="input-group-btn d-flex justify-content-center">
                                     <button type="button" className="btn btn__plus__minus" onClick={plus_details} >
                                         <i className="fa fa-plus" aria-hidden="true"></i>
@@ -57,7 +73,7 @@ function Product_Detail(props) {
                                 </span>
                             </div>
                             <div className="detail__add mx-3">
-                                <a onClick={() => addProduct(product.product_id)} className="detail__add-btn btn btn-warning px-5 py-2" role="button">Add to cart</a>
+                                <a onClick={() => addProduct(product._id)} className="detail__add-btn btn btn-warning px-5 py-2" role="button">Add to cart</a>
                             </div>
                         </div>
                     </div>

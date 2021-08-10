@@ -4,6 +4,7 @@ import './App.css';
 import './css/header/style.css';
 import './css/main/style.css';
 import './css/footer/style.css';
+import './css/style.css';
 
 // component
 import Product_Side from './component/Product-Side';
@@ -14,6 +15,8 @@ import Cart_page from './Page/Cart';
 import Details_page from './Page/Details';
 import CheckOut_Page from './Page/CheckOut';
 import Success_Page from './Page/SuccessCheckOut';
+import Login_Page from './Page/Login';
+import Success from './component/Success';
 // data
 import search from './img/search.png';
 import account from './img/account.png';
@@ -24,14 +27,6 @@ import return_poli from './img/return.png';
 import product1 from './img/product1.jpg';
 import product2 from './img/product2.jpg';
 import product3 from './img/product3.jpg';
-import product_item1 from './img/product-item1.jpg';
-import product_item2 from './img/product-item2.jpg';
-import product_item3 from './img/product-item3.jpg';
-import product_item4 from './img/product-item4.jpg';
-import product_item5 from './img/product-item5.jpg';
-import product_item6 from './img/product-item6.jpg';
-import product_item7 from './img/product-item7.jpg';
-import product_item8 from './img/product-item8.jpg';
 import product_sale_1 from './img/product_sale-1.jpg';
 import product_sale_2 from './img/product_sale-2.jpg';
 import product_news_1 from './img/product_news1.jpg';
@@ -47,15 +42,22 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
-import React from 'react';
+
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as productAction from '../src/actions/productAction'
+import ScrollToTop from './component/ScrollToTop';
 
 import '@fortawesome/fontawesome-free/css/all.css';
 
 
+import Swiper from 'swiper';
+import 'swiper/swiper-bundle.css';
+import validator from 'validator';
+
+// const initialState = 
 
 
 class Index extends React.Component {
@@ -67,128 +69,7 @@ class Index extends React.Component {
             sideNav_isShow: false,
             amount_product_details: 1,
             amount_product_add: JSON.parse(localStorage.getItem("amount_product_add")) || [],
-            productsList: [
-                {
-                    product_id: 1,
-                    product_img: product_item1,
-                    product_img_hover: product_item3,
-                    product_date: '2021/02/05',
-                    product_sale: 20,
-                    product_name: 'Simple Minimal Chair',
-                    product_price: 45.59,
-                    product_description: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    prodcuct_weight: '350',
-                    product_dimension: '10 x 20 x 15',
-                    product_material: '40% polyester',
-                    product_infor: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid',
-                    product_amount: 1
-                },
-                {
-                    product_id: 2,
-                    product_img: product_item2,
-                    product_img_hover: product_item6,
-                    product_date: '2021/01/05',
-                    product_sale: 20,
-                    product_name: 'Wooden decorations',
-                    product_price: 29.54,
-                    product_description: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    prodcuct_weight: '400',
-                    product_dimension: '10 x 10 x 15',
-                    product_material: '60% cotton, 40% polyester',
-                    product_infor: 'American heirloom jean shorts pug seitan letterpress',
-                    product_amount: 1
-                },
-                {
-                    product_id: 3,
-                    product_img: product_item3,
-                    product_img_hover: product_item2,
-                    product_date: '2021/02/10',
-                    product_sale: 30,
-                    product_name: 'High quality vase',
-                    product_price: 58.85,
-                    product_description: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    prodcuct_weight: '600',
-                    product_dimension: '30 x 20 x 40',
-                    product_material: '60% cotton',
-                    product_infor: 'Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    product_amount: 1
-                },
-                {
-                    product_id: 4,
-                    product_img: product_item4,
-                    product_img_hover: product_item1,
-                    product_date: '2021/03/05',
-                    product_sale: null,
-                    product_name: 'Living & Bedroom',
-                    product_price: 45.89,
-                    product_description: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    prodcuct_weight: '400',
-                    product_dimension: '10 x 10 x 15',
-                    product_material: '60% cotton, 40% polyester',
-                    product_infor: 'American heirloom jean shorts pug seitan letterpress',
-                    product_amount: 1
-                },
-                {
-                    product_id: 5,
-                    product_img: product_item5,
-                    product_img_hover: product_item4,
-                    product_date: '2021/01/05',
-                    product_sale: null,
-                    product_name: 'Living & Bedroom',
-                    product_price: 38.85,
-                    product_description: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    prodcuct_weight: '450',
-                    product_dimension: '45 x 130 x 75',
-                    product_material: '30% cotton, 70% polyester',
-                    product_infor: 'Labore et dolore magna aliqua. Ut enim ad minim venialo',
-                    product_amount: 1
-                },
-                {
-                    product_id: 6,
-                    product_img: product_item6,
-                    product_img_hover: product_item7,
-                    product_date: '2021/02/10',
-                    product_sale: null,
-                    product_name: 'Simple Minimal Chair',
-                    product_price: 45.38,
-                    product_description: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    prodcuct_weight: '400',
-                    product_dimension: '10 x 10 x 15',
-                    product_material: '60% cotton, 40% polyester',
-                    product_infor: 'American heirloom jean shorts pug seitan letterpress',
-                    product_amount: 1
-                },
-                {
-                    product_id: 7,
-                    product_img: product_item7,
-                    product_img_hover: product_item8,
-                    product_date: '2021/01/05',
-                    product_sale: 40,
-                    product_name: 'Living & Bedroom',
-                    product_price: 48.25,
-                    product_description: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    prodcuct_weight: '800',
-                    product_dimension: '56 x 30 x 87',
-                    product_material: '60% cotton, 40% polyester',
-                    product_infor: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna',
-                    product_amount: 1
-                },
-                {
-                    product_id: 8,
-                    product_img: product_item8,
-                    product_img_hover: product_item5,
-                    product_date: '2021/02/22',
-                    product_sale: 30,
-                    product_name: 'High quality vase',
-                    product_price: 35.85,
-                    product_description: 'Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco',
-                    prodcuct_weight: '400',
-                    product_dimension: '10 x 10 x 15',
-                    product_material: '60% cotton, 40% polyester',
-                    product_infor: 'American heirloom jean shorts pug seitan letterpress',
-                    product_amount: 1
-                },
-            ],
+            productsList: [],
             products_recommendList: [
                 {
                     prodcuct_img: product1,
@@ -223,11 +104,82 @@ class Index extends React.Component {
                 account_email: "",
                 account_product: [],
                 account_product_total: 0
-            }
+            },
+            loading: false,
+            currentPage: 1,
+            postsPerPage:12,
+            list__recommend: [
+                {
+                    title: "New Arrivals",
+                    hints: "new"
+                },
+                {
+                    title: "Best Sellers",
+                    hints: "hot"
+                },
+                {
+                    title: "Sale Items",
+                    hints: "sales"
+                },
+                {
+                    title: "On Sales",
+                    hints: "all"
+                },
+            ],
+            offset: 0,
+            loginAccount:{
+                usernameLogin: "",
+                passwordLogin: ""
+            },
+            registerAccount:{
+                usernameReg: "",
+                passwordReg: "",
+                emailReg: "",
+            },
+            errorMsg:{
+                usernameRegError:"",
+                passwordRegError:"",
+                emailRegError:"",
+            },
+            isSuccess: ""
         }
     }
 
+   
 
+ 
+
+    componentDidMount(){
+        window.scrollTo(0, 0)
+        const fetchPosts = async () =>{
+            this.setState({
+                loading: true
+            })
+            await axios
+            .get("http://localhost:3001/posts")
+            .then((res)=>{
+                this.setState({
+                    productsList: res.data
+                })
+            })
+            this.setState({
+                loading: false
+            })
+        }
+        fetchPosts();
+        console.log(this.state.isSuccess)
+    }
+
+    componentDidUpdate(){
+        window.onscroll = () => {
+            this.setState({
+                offset: window.pageYOffset
+            })
+        }
+        
+    }
+   
+   
     orderBtn = () => {
         const { accountOrder } = this.state;
         let total = this.state.amount_product_add.reduce((total, product) =>
@@ -243,7 +195,7 @@ class Index extends React.Component {
             axios
                 .post("https://606435c9f0919700177852da.mockapi.io/account_order", accountOrder)
                 .then(res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                 })
                 .catch(error => { })
         )
@@ -253,6 +205,8 @@ class Index extends React.Component {
         localStorage.setItem("amount_product_add", JSON.stringify(this.state.amount_product_add));
 
     };
+
+ 
 
 
     search = (e) => {
@@ -283,10 +237,10 @@ class Index extends React.Component {
     }
 
     addProduct = id => {
-        let findedIndex = this.state.amount_product_add.find(product => product.product_id === id);
+        let findedIndex = this.state.amount_product_add.find(product => product._id === id);
         if (findedIndex) {
             let product = this.state.amount_product_add.map(product => {
-                if (product.product_id === id) {
+                if (product._id === id) {
                     return {
                         ...product,
                         product_amount: product.product_amount + this.state.amount_product_details
@@ -303,7 +257,7 @@ class Index extends React.Component {
                 this.saveToLocalStorage()
             })
         } else {
-            let findAdd = this.state.productsList.find(product => product.product_id === id);
+            let findAdd = this.state.productsList.find(product => product._id === id);
             const newList = [...this.state.amount_product_add, findAdd]
             this.setState({
                 amount_product_add: newList,
@@ -318,8 +272,8 @@ class Index extends React.Component {
 
 
     deleteProduct = id => {
-        let newListProducts = [...this.state.amount_product_add.filter(product => product.product_id === id)];
-        let findedIndex = newListProducts.find(product => product.product_id === id);
+        let newListProducts = [...this.state.amount_product_add.filter(product => product._id === id)];
+        let findedIndex = newListProducts.find(product => product._id === id);
         for (var i = 0; i < this.state.amount_product_add.length; i++) {
             if (this.state.amount_product_add[i] === findedIndex) {
                 this.state.amount_product_add.splice(i, 1);
@@ -331,15 +285,15 @@ class Index extends React.Component {
             amount_product_add: this.state.amount_product_add,
         }, () => {
             this.saveToLocalStorage()
-            console.log(this.state.productsList)
+            // console.log(this.state.productsList)
         })
         findedIndex.product_amount = 1
-        console.log(this.state.productsList)
+        // console.log(this.state.productsList)
     }
 
     miunusProduct = id => {
         let newListProducts = [...this.state.amount_product_add];
-        let findedIndex = newListProducts.find(product => product.product_id === id);
+        let findedIndex = newListProducts.find(product => product._id === id);
         if (findedIndex.product_amount > 0) {
             findedIndex.product_amount = findedIndex.product_amount - this.state.amount_product_details
             this.setState({
@@ -356,8 +310,9 @@ class Index extends React.Component {
 
     viewProduct = id => {
         let newListProducts = [...this.state.productsList];
+        // console.log(id)
         this.setState({
-            findedIndexViewDetail: newListProducts.filter(product => product.product_id === id),
+            findedIndexViewDetail: newListProducts.filter(product => product._id === id),
             amount_product_details: 1
         })
     }
@@ -421,7 +376,7 @@ class Index extends React.Component {
                 account_companyName: e.target.value,
             }
         }, () => {
-            console.log(this.state.accountOrder.account_companyName)
+            // console.log(this.state.accountOrder.account_companyName)
         })
     };
 
@@ -435,6 +390,9 @@ class Index extends React.Component {
     };
 
     formAddress = e => {
+        if(e.target.value === null){
+            console.log("not thing")
+        }   
         this.setState({
             accountOrder: {
                 ...this.state.accountOrder,
@@ -488,15 +446,289 @@ class Index extends React.Component {
         })
     }
 
+    
+    paginate = (number) => {
+        this.setState({
+            currentPage: number
+        })
+    }
 
-    // 
+    paginatePrev = (number) =>{
+        if(number <= 1){
+            return false;
+        }
+        else{
+            this.setState({
+                currentPage: number - 1
+            })
+        }
+       
+    }
+    paginateNext = (total, number) =>{
+        if(number >= Math.ceil(total / this.state.postsPerPage)){
+            return false;
+        }
+        else{
+            this.setState({
+                currentPage: number + 1
+            })
+        }
+    }
+
+    // Register
+    UserNameReg = (e) =>{
+        
+        this.setState({
+            registerAccount:{
+                ...this.state.registerAccount,
+                usernameReg: e.target.value
+            },
+        })
+        
+    }
+
+    PasswordReg = (e) =>{
+        this.setState({
+            registerAccount:{
+                ...this.state.registerAccount,
+                passwordReg: e.target.value
+            }
+        })
+    }
+
+    EmailReg = (e) =>{
+        this.setState({
+            registerAccount:{
+                ...this.state.registerAccount,
+                emailReg: e.target.value
+            }
+        })
+    }
+
+    validateName = (nameError) => {
+        if(!this.state.registerAccount.usernameReg){
+            return nameError = "User name can not be blank!"
+            
+        }
+    }
+
+    validatePassword = (passwordError) => {
+        if(!this.state.registerAccount.passwordReg){
+            return passwordError = "Password can not be blank!"
+            
+        }
+    }
+
+    validateEmail = (emailError) => {
+        
+        if(!this.state.registerAccount.emailReg){
+            return emailError = "Email can not be blank!"
+        }
+        else if(!this.isEmail(this.state.registerAccount.emailReg)){
+            return emailError = "Email is wrong!"
+        }
+    }
+
+    validateNameLogin = (nameError) => {
+        if(!this.state.loginAccount.usernameLogin){
+            return nameError = "User name can not be blank!"
+            
+        }
+    }
+
+    validatePasswordLogin = (passwordError) => {
+        if(!this.state.loginAccount.passwordLogin){
+            return passwordError = "Password can not be blank!"
+            
+        }
+    }
+
+ 
+
+    validateReg = () =>{
+        let usernameRegError = "";
+        let passwordRegError = "";
+        let emailRegError = "";
+        
+        const namevalidate = this.validateName(usernameRegError)
+        const passwordvalidate = this.validatePassword(passwordRegError)
+        const emailvalidate = this.validateEmail(emailRegError)
+        
+        if(namevalidate  || passwordvalidate || emailvalidate ){
+            this.setState({
+                errorMsg:{
+                    ...this.state.errorMsg,
+                    usernameRegError: namevalidate ,
+                    passwordRegError: passwordvalidate,
+                    emailRegError: emailvalidate 
+                },
+            })
+            return false
+        }
+        return true
+        
+        
+    }
+
+    validateLogin = () =>{
+        let usernameLoginError = "";
+        let passwordLoginError = "";
+        
+        const namevalidate = this.validateNameLogin(usernameLoginError)
+        const passwordvalidate = this.validatePasswordLogin(passwordLoginError)
+        
+        if(namevalidate  || passwordvalidate ){
+            this.setState({
+                errorMsg:{
+                    ...this.state.errorMsg,
+                    usernameRegError: namevalidate ,
+                    passwordRegError: passwordvalidate
+                },
+            })
+            return false
+        }
+        return true
+        
+        
+    }
+    
+    
+    setFail= () =>{
+        this.setState({
+            isSuccess: false
+        });
+        setTimeout(function () {
+            this.setState({ isSuccess: "" }); //After 1 second, set render to true
+        }.bind(this), 4500)
+    
+    }
+
+    setSuccess = () =>{
+
+        this.setState({
+            isSuccess: true
+        });
+        setTimeout(function () {
+            this.setState({ isSuccess: "" }); //After 1 second, set render to true
+        }.bind(this), 4500)
+        
+    
+    }
+
+    
+    registerPosts = async () =>{
+        const {registerAccount} = this.state
+        this.setState({
+            loading: true
+        })
+        await axios
+        .post("http://localhost:3001/users", registerAccount)
+        .then((res)=>{
+            
+        })
+    }
+
+    loginPosts = async () =>{
+        const {loginAccount} = this.state
+        this.setState({
+            loading: true
+        })
+        // await axios
+        // .post("http://localhost:3001/send/users", loginAccount)
+        // .then((res)=>{
+        //     console.log(res.data)
+        // })
+    }
+
+    btnReg = (e) =>{
+
+        const {registerAccount} = this.state
+        const isTrue = true
+        const validate  = this.validateReg()
+        console.log(validate)
+        
+        if(!validate){
+            if(validate !== isTrue){
+                this.setFail()
+                
+            }
+        }
+        if(validate ){
+            if(validate === isTrue){
+                this.setState({
+                    errorMsg:{
+                        ...this.state.errorMsg,
+                        usernameRegError: "" ,
+                        passwordRegError: "" ,
+                        emailRegError: ""
+                    },
+                },()=>{
+                    this.setSuccess()
+                    this.registerPosts()
+                })
+                
+            }
+            
+        } 
+        
+    }
+    // login
+
+    UserNameLogin = (e) =>{
+        this.setState({
+            loginAccount:{
+                ...this.state.loginAccount,
+                usernameLogin: e.target.value
+            }
+        })
+    }
+
+    PasswordLogin = (e) =>{
+        this.setState({
+            loginAccount:{
+                ...this.state.loginAccount,
+                passwordLogin: e.target.value
+            }
+        })
+    }
+
+    btnLogin = () =>{
+        const validate = this.validateLogin()
+        console.log("abc")
+        if(!validate){
+            if(validate !== true){
+                this.setFail()
+                
+            }
+        }
+        if(validate ){
+            if(validate === true){
+                this.setState({
+                    errorMsg:{
+                        ...this.state.errorMsg,
+                        usernameRegError: "" ,
+                        passwordRegError: "" 
+                    },
+                },()=>{
+                    this.setSuccess()
+                    this.loginPosts()
+                })
+                
+            }
+            
+        } 
+    }
+
+    
+    // constraint
+    isEmail(emailConstraint) {
+        return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(emailConstraint);
+    }
 
     render() {
+        
         //   state
-        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder } = this.state
-
-
-
+        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess } = this.state
         const filterData = productsList
             .filter((product) =>
                 product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
@@ -535,12 +767,19 @@ class Index extends React.Component {
                     return -1;
                 }
             })
-
+            // console.log(filterData)
+             // get currents posts
+            const indexOfLastPost = currentPage * postsPerPage;
+            const indexOfFirstPost = indexOfLastPost - postsPerPage;
+            const currentPosts = filterData.slice(indexOfFirstPost, indexOfLastPost)
+            
         return (
-            <Router>
+            <Router  >
                 <div >
                     <header className="header">
                         <div className="header-section">
+                            <Success
+                            isSuccess={isSuccess}/>
                             {/* <!-- wellcome start --> */}
                             <div className="header-wellcome bg-dark">
                                 <div className="container d-flex align-items-center py-2">
@@ -589,16 +828,20 @@ class Index extends React.Component {
                                         </div>
                                         <div className="logo-icon ml-auto d-flex align-items-center">
                                             <div className="d-flex align-items-center">
-                                                <div className={search_isShow ? 'input_search mx-1 d-flex input_search-show' : 'input_search mx-1 d-flex input_search-primary'}>
-                                                    <input className="border-right-0" type="text" onChange={this.search} placeholder="Enter your search key" />
-
-                                                    <button onClick={this.submitSearch} type="submit" className="border-left-0 ml-auto"><i className="fa fa-search " aria-hidden="true"></i></button>
-                                                </div>
+                                                
                                                 <div className="search icon-items mx-1">
                                                     <img src={search} alt="" onClick={this.openSearch}></img>
+                                                    <div className={search_isShow ? 'input_search mx-1 d-flex input_search-show' : 'input_search mx-1 d-flex input_search-primary'}>
+                                                        <input className="border-right-0" type="text" onChange={this.search} placeholder="Enter your search key" />
+
+                                                        <button onClick={this.submitSearch} type="submit" className="border-left-0 ml-auto"><i className="fa fa-search " aria-hidden="true"></i></button>
+                                                    </div>
                                                 </div>
                                                 <div className="icon-items mx-1">
-                                                    <img src={account} alt=""></img>
+                                                    <Link to="/login" >
+                                                        <img src={account} alt=""></img>
+                                                    </Link>
+                                                    
                                                 </div>
                                                 <div onClick={this.openShop} className="icon-items mx-1">
                                                     <img src={card} alt="" ></img>
@@ -618,13 +861,14 @@ class Index extends React.Component {
                                             </div>
                                         </div>
                                         {/* nav side shop */}
-                                        <div id="shop-side" className={sideShop_isShow ? 'sideshop-open sideshop' : 'sideshop'}>
-                                            <a href="javascript:void(0)" className="closebtn" onClick={this.openShop}>&times;</a>
+                                        <div id="shop-side" className={sideShop_isShow ? 'sideshop-open sideshop' : 'sideshop'} style={{ top: offset ? "64px" : 0 }}>
+                                            <a href="javascript:void(0);" className="closebtn" onClick={this.openShop}>&times;</a>
 
                                             {
                                                 amount_product_add.map((product) => {
                                                     return (
-                                                        <Product_Side
+                                                        <Product_Side key={product._id}
+                                                            // key={product.product__id}
                                                             product={product}
                                                             deleteProduct={this.deleteProduct}
                                                             viewProduct={this.viewProduct}
@@ -668,8 +912,8 @@ class Index extends React.Component {
                                             </div>
                                         </div>
                                         {/* nav side */}
-                                        <div id="nav-side" style={{ width: sideNav_isShow ? '250px' : 0 }} className="sidenav">
-                                            <a href="javascript:void(0)" className="closebtn" onClick={this.openNav}>&times;</a>
+                                        <div id="nav-side" style={{ left: sideNav_isShow ? 0 : '-250px' }} className="sidenav">
+                                            <a  className="closebtn" onClick={this.openNav}>&times;</a>
                                             <ul className="navbar-nav">
                                                 <li className="nav-item py-1">
                                                     <Link to="/" className="nav-link" href="#">Home</Link>
@@ -693,7 +937,7 @@ class Index extends React.Component {
                             </div>
                             {/* <!-- logo end --> */}
                             {/* <!-- nav start --> */}
-                            <div className="header-nav bg-dark">
+                            <div className={"header-nav "}>
                                 <div className="navbar-expand-md">
                                     <div className="navbar-collapse d-flex justify-content-center">
                                         <ul className="navbar-nav py-2">
@@ -718,7 +962,38 @@ class Index extends React.Component {
                                                 </span>
                                             </li>
                                             <li className="nav-item py-1">
-                                                <a className="nav-link" href="#">Conntact us</a>
+                                                <a className="nav-link" href="#">Contact us</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={offset > 140 ? "header-nav scroll-active header-scroll" : "header-nav  header-scroll"}>
+                                <div className="navbar-expand-md">
+                                    <div className="navbar-collapse d-flex justify-content-center">
+                                        <ul className="navbar-nav py-2">
+                                            <li className="nav-item py-1">
+                                                <Link to="/" className="nav-link">Home</Link>
+                                            </li>
+                                            <li className="nav-item py-1">
+                                                <a className="nav-link" href="#">About us</a>
+                                            </li>
+                                            <li className="nav-item py-1">
+                                                <Link to="/shop" className="nav-link">Shop</Link>
+                                            </li>
+                                            <li className="nav-item dropdown py-1">
+                                                <span className="d-flex align-items-center" data-toggle="dropdown">
+                                                    <a className="nav-link" href="#">Blogs</a>
+                                                    <img src="./img/drop-down.png" alt=""></img>
+                                                    <div className="dropdown-menu text-dark">
+                                                        <a className="dropdown-item" href="#">Link 1</a>
+                                                        <a className="dropdown-item" href="#">Link 2</a>
+                                                        <a className="dropdown-item" href="#">Link 3</a>
+                                                    </div>
+                                                </span>
+                                            </li>
+                                            <li className="nav-item py-1">
+                                                <a className="nav-link" href="#">Contact us</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -732,6 +1007,7 @@ class Index extends React.Component {
                     {/* main */}
                     <Switch>
                         <Route path="/" exact>
+                            <ScrollToTop/>
                             <Home_page
                                 products_recommendList={products_recommendList}
                                 productsList={productsList}
@@ -742,9 +1018,11 @@ class Index extends React.Component {
                                 product_news_1={product_news_1}
                                 product_news_2={product_news_2}
                                 product_news_3={product_news_3}
+                                list__recommend={list__recommend}
                             />
                         </Route>
                         <Route path="/shop" >
+                            <ScrollToTop/>
                             <Shop_page
                                 products_recommendList={products_recommendList}
                                 productsList={productsList}
@@ -753,9 +1031,17 @@ class Index extends React.Component {
                                 filterData={filterData}
                                 searchFilterPrice={this.searchFilterPrice}
                                 searchFilterName={this.searchFilterName}
+                                loading={loading}
+                                currentPosts={currentPosts}
+                                postsPerPage={postsPerPage}
+                                paginate={this.paginate}
+                                currentPage= {currentPage}
+                                paginatePrev={this.paginatePrev}
+                                paginateNext={this.paginateNext}
                             />
                         </Route>
                         <Route path="/detail" >
+                            <ScrollToTop/>
                             <Details_page
                                 products_recommendList={products_recommendList}
                                 findedIndexViewDetail={findedIndexViewDetail}
@@ -771,6 +1057,7 @@ class Index extends React.Component {
                             />
                         </Route>
                         <Route path="/cart">
+                            <ScrollToTop/>
                             <Cart_page
                                 products_recommendList={products_recommendList}
                                 amount_product_add={amount_product_add}
@@ -784,6 +1071,7 @@ class Index extends React.Component {
                             />
                         </Route>
                         <Route path="/checkout" >
+                            <ScrollToTop/>
                             <CheckOut_Page
                                 amount_product_add={amount_product_add}
                                 accountOrder={accountOrder}
@@ -801,10 +1089,27 @@ class Index extends React.Component {
                             />
                         </Route>
                         <Route path="/success" >
+                            <ScrollToTop/>
                             <Success_Page
                                 amount_product_add={amount_product_add}
                                 accountOrder={accountOrder} />
                         </Route>
+                        <Route path="/login" >
+                            <ScrollToTop/>
+                            <Login_Page 
+                            // reg
+                                UserNameReg={this.UserNameReg}
+                                PasswordReg={this.PasswordReg}
+                                EmailReg={this.EmailReg}
+                                btnReg={this.btnReg}
+                                errorMsg={errorMsg}
+                            // login
+                                UserNameLogin={this.UserNameLogin}
+                                PasswordLogin={this.PasswordLogin}
+                                btnLogin={this.btnLogin}
+                            />
+                        </Route>
+                        
                     </Switch>
                     {/* main */}
                     <footer>
@@ -836,8 +1141,11 @@ class Index extends React.Component {
                                 </div>
                                 <div className="footer-news col-6 col-lg-3">
                                     <h6 className="my-3">NEWSLETTER</h6>
-                                    <input data-toggle="popover" data-content="This form is not sercure. Auto fill has been turn off" placeholder="Your Mail*" type="text" className="p-2" required />
-                                    <a href="#" className="btn py-2 px-2" role="button">Send mail</a>
+                                    <div className="email-send">
+                                        <input data-toggle="popover" data-content="This form is not sercure. Auto fill has been turn off" placeholder="Your Mail*" type="text" className="p-2" defaultValue="Your Mail*" required />
+                                        <a href="#" className="btn py-2 px-2" role="button">Send mail</a>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

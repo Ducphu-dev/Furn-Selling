@@ -14,16 +14,26 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
+// swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
 
 function HomePage(props) {
     //   state
-    const { productsList, products_recommendList, DetailsPage, product_sale_1, product_sale_2 } = props
+    const { productsList, products_recommendList, DetailsPage, product_sale_1, product_sale_2, list__recommend } = props
 
 
     // function
     const { addProduct, viewProduct, formFirstName } = props
 
     const recommend_new_list = (productsList.filter((product, index) => product = product.product_sale !== null))
+    const [toggleTabs, setToggleTabs] = useState(0)
+
+    const changeTabRecommend = (index) =>{
+        setToggleTabs(index)
+        console.log(index)
+    }
+    
 
     return (
 
@@ -31,52 +41,50 @@ function HomePage(props) {
             {/* INDEX start */}
             <main className="main">
                 <div className="main-slider">
-                    <div id="slider" className="carousel slide" data-ride="carousel">
-                        {/* <!-- start slider --> */}
-                        <div className="carousel-inner">
-                            <ul className="carousel-indicators">
-                                <li data-target="#slider" data-slide-to="0" className="active"></li>
-                                <li data-target="#slider" data-slide-to="1"></li>
-                            </ul>
 
-                            <div className="carousel-item active">
-                                <img src="https://htmldemo.hasthemes.com/furns/furns/assets/images/slider-image/slider-2-1.jpg" alt="Los Angeles"></img>
+                    <Swiper
+                        slidesPerView={1}
+                        pagination={{clickable:true}}
+                        navigation
+                        className="Swiper-banner"
+                        
+                    >
+                        <SwiperSlide>
+                            <div className="image-banner">
+                                <img src="https://htmldemo.hasthemes.com/furns/furns/assets/images/slider-image/slider-2-1.jpg" alt="Chicago"></img>
+                                <div className="introduce-center">
+                                    <h4 className="font-weight-bold">New Product</h4>
+                                    <h1 className="font-weight-bold products-name">Flexible Sofa Set</h1>
+                                    <p className="title">Torem ipsum dolor sit amet, consectetur adipisicing elitsed do <br /> eiusmo tempor incididunt ut labore et dolore magna</p>
+                                    <Link to="/shop">Shop now</Link>
+                                </div>
                             </div>
-                            <div className="carousel-item">
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <div className="image-banner">
                                 <img src="https://htmldemo.hasthemes.com/furns/furns/assets/images/slider-image/slider-2-2.jpg" alt="Chicago"></img>
+                                <div className="introduce-center">
+                                    <h4 className="font-weight-bold">New Product</h4>
+                                    <h1 className="font-weight-bold products-name">Flexible Sofa Set</h1>
+                                    <p className="title">Torem ipsum dolor sit amet, consectetur adipisicing elitsed do <br /> eiusmo tempor incididunt ut labore et dolore magna</p>
+                                    <Link to="/shop">Shop now</Link>
+                                </div>
                             </div>
-
-                            <a className="carousel-control-prev " href="#slider" data-slide="prev">
-                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                            </a>
-
-                            <a className="carousel-control-next" href="#slider" data-slide="next">
-                                <i class="fa fa-chevron-right" aria-hidden=" true"></i>
-                            </a>
-                        </div>
-                        {/* <!-- end slider --> */}
-
-                        {/* <!-- start introduce slider --> */}
-                        <div className="introduce-center ">
-                            <span><h4 className="font-weight-bold">New Product</h4></span>
-                            <span className="products-name"><h1 className="font-weight-bold">Flexible Sofa Set</h1></span>
-                            <span className="title"><p>Torem ipsum dolor sit amet, consectetur adipisicing elitsed do <br /> eiusmo tempor incididunt ut labore et dolore magna</p></span>
-                            <Link to="/shop">Shop now</Link>
-                        </div>
-                        {/* <!-- end introduce slider --> */}
-                    </div>
+                        </SwiperSlide>
+                    </Swiper>
+                    
                 </div>
 
                 <div className="main-list-products container">
                     {/* <!--  recommend list product start --> */}
 
                     <div className="main-list py-4 ">
-                        <div className="row list-items-recommend py-4">
+                        <div className="row list-items-recommend py-4 justify-content-center">
 
                             {
                                 products_recommendList.map((product, index) => {
                                     return (
-                                        <div className="col-12 col-sm-12 col-lg-4 my-3" key={product.prodcuct_id} >
+                                        <div className="col-12  col-sm-6 col-lg-4 my-3" key={product._id} >
                                             <div className="card d-flex align-items-center">
                                                 <img className="card-img-top" src={product.prodcuct_img} alt="Card image"></img>
                                                 <div className="text__overlay card-img-overlay ">
@@ -102,30 +110,94 @@ function HomePage(props) {
 
                         <div className="recommend__list py-5">
                             <ul className="d-flex justify-content-center list">
-                                <li className="px-4"><a className="active" href="">New Arrivals</a></li>
+                                {
+                                    list__recommend.map((element, index) =>{
+                                        return(
+                                            <li className="px-4" key={index}>
+                                                <a onClick={()=>changeTabRecommend(index, element)} className={toggleTabs === index ? "active" : ""} >{element.title}</a>
+                                            </li>
+                                        )
+                                    })
+                                }
+                                {/* <li className="px-4"><a className="active" href="">New Arrivals</a></li>
                                 <li className="px-4"><a href="">Best Sellers</a></li>
                                 <li className="px-4"><a href="">Sale Items</a></li>
-                                <li className="px-4"><a href="">On Sales</a></li>
+                                <li className="px-4"><a href="">On Sales</a></li> */}
                             </ul>
                         </div>
 
                         {/* <!-- products start --> */}
-                        <div className="row products py-4">
+                        <div className="py-4 list-recommend">
+                            <div   className={toggleTabs === 0 ? "row products list-recommend__items active" : "row products list-recommend__items"}>
 
-                            {
-                                productsList.map((product) => {
-                                    return (
-                                        <Product
-                                            addProduct={addProduct}
-                                            product={product}
-                                            viewProduct={viewProduct}
-                                            DetailsPage={DetailsPage}
-                                        />
-                                    )
-                                })
-                            }
+                                {
+                                    productsList.map((product) => {
+                                        return (
+                                            <Product key={product._id}
+                                                addProduct={addProduct}
+                                                product={product}
+                                                viewProduct={viewProduct}
+                                                DetailsPage={DetailsPage}
+                                            />
+                                        )
+                                    })
+                                    .filter((product, index) => index < 8)
+                                }
 
+                            </div>
+                            <div className={toggleTabs === 1 ? "row products list-recommend__items active" : "row products list-recommend__items"}>
+
+                                {
+                                    productsList.map((product) => {
+                                        return (
+                                            <Product key={product._id}
+                                                addProduct={addProduct}
+                                                product={product}
+                                                viewProduct={viewProduct}
+                                                DetailsPage={DetailsPage}
+                                            />
+                                        )
+                                    })
+                                    .filter((product, index) => index < 8)
+                                }
+
+                            </div>
+                            <div className={toggleTabs === 2 ? "row products list-recommend__items active" : "row products list-recommend__items"}>
+
+                                {
+                                    productsList.map((product) => {
+                                        return (
+                                            <Product key={product._id}
+                                                addProduct={addProduct}
+                                                product={product}
+                                                viewProduct={viewProduct}
+                                                DetailsPage={DetailsPage}
+                                            />
+                                        )
+                                    })
+                                    .filter((product, index) => index < 8)
+                                }
+
+                            </div>
+                            <div className={toggleTabs === 3 ? "row products list-recommend__items active" : "row products list-recommend__items"}>
+
+                                {
+                                    productsList.map((product) => {
+                                        return (
+                                            <Product key={product._id}
+                                                addProduct={addProduct}
+                                                product={product}
+                                                viewProduct={viewProduct}
+                                                DetailsPage={DetailsPage}
+                                            />
+                                        )
+                                    })
+                                    .filter((product, index) => index < 8)
+                                }
+
+                            </div>
                         </div>
+                        
                         {/* <!-- products end --> */}
                     </div>
                 </div>
@@ -148,34 +220,50 @@ function HomePage(props) {
                     </div>
                 </div>
                 {/* product sale end */}
-                <div className="main-products-recommend container ">
-                    <div className="recommend__title py-4 text-center">
-                        <h1><strong>Sale products</strong></h1>
-                        <p>Torem ipsum dolor sit amet, consectetur adipisicing elitsed do <br /> eiusmo tempor incididunt ut labore et dolore magna</p>
+                <div className="container">
+                    <div className="main-products-recommend products  ">
+                        <div className="recommend__title py-4 text-center">
+                            <h1><strong>Sale products</strong></h1>
+                            <p>Torem ipsum dolor sit amet, consectetur adipisicing elitsed do <br /> eiusmo tempor incididunt ut labore et dolore magna</p>
+                        </div>
+
+                        <Swiper
+                            slidesPerView={2}
+                            navigation
+                            className="Swiper-sale"
+                            breakpoints={{
+                                // when window width is >= 640px
+                                768: {
+                                  slidesPerView: 3,
+                                },
+                                // when window width is >= 768px
+                                992: {
+                                  slidesPerView: 4,
+                                }}
+                            }
+                        >
+                                {
+                                    
+                                    recommend_new_list.map((product, index) => {
+                                        return (
+                                            <SwiperSlide>
+                                                <Product key={product._id}
+                                                addProduct={addProduct}
+                                                product={product}
+                                                viewProduct={viewProduct}
+                                                DetailsPage={DetailsPage}
+                                            />
+                                            </SwiperSlide>
+                                            
+                                        )
+                                    })
+                                        
+                                }
+                            
+                        </Swiper>
                     </div>
-
-                    {/* <!-- products new start --> */}
-                    <div className="row products py-4">
-
-                        {
-                            recommend_new_list.map((product, index) => {
-                                return (
-                                    <Product
-                                        addProduct={addProduct}
-                                        product={product}
-                                        viewProduct={viewProduct}
-                                        DetailsPage={DetailsPage}
-                                    />
-                                )
-                            })
-                                .filter((product, index) => index < 4)
-                        }
-
-                    </div>
-                    {/* <!-- products new end --> */}
-
-
                 </div>
+                
 
             </main>
             {/* INDEX end */}

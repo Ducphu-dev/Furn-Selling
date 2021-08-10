@@ -8,15 +8,15 @@ function Cart(props) {
     // function
     const { deleteProduct, addProduct, miunusProduct, viewProduct } = props
     return (
-        <div>
-            <div key={product.product_id} className="items__products row text-center border border-top-0 align-items-center py-4">
+        <div key={product._id}>
+            <div  className="items__products row text-center border border-top-0 align-items-center py-4">
                 <div className="col-2 col-img " >
                     <div className="shop-item d-flex " >
                         <img className="" src={product.product_img} alt="Card image" ></img>
                     </div>
                 </div>
                 <div className="col-2 col-name">
-                    <Link to="/detail" onClick={() => viewProduct(product.product_id)}>{product.product_name}</Link>
+                    <Link to="/detail" onClick={() => viewProduct(product._id)}>{product.product_name}</Link>
                 </div>
                 <div className="col-2 col-price" >
                     {`$${product.product_price - Math.ceil(product.product_price * (product.product_sale / 100))}`}
@@ -24,13 +24,13 @@ function Cart(props) {
                 <div className="col-2 col-quantity" >
                     <div className="d-flex align-items-center">
                         <span className="input-group-btn">
-                            <button type="button" className="btn border rounded-0" onClick={() => miunusProduct(product.product_id)} >
+                            <button type="button" className="btn border rounded-0" onClick={() => miunusProduct(product._id)} >
                                 <i className="fa fa-minus" aria-hidden="true"></i>
                             </button>
                         </span>
-                        <input type="text" name="quant[1]" className="form-control input-number text-center border-top border-bottom rounded-0" value={product.product_amount} />
+                        <div  className="form-control input-number text-center border-top border-bottom rounded-0"  >{product.product_amount}</div>
                         <span className="input-group-btn">
-                            <button type="button" className="btn border rounded-0" onClick={() => addProduct(product.product_id)}>
+                            <button type="button" className="btn border rounded-0" onClick={() => addProduct(product._id)}>
                                 <i className="fa fa-plus" aria-hidden="true"></i>
                             </button>
                         </span>
@@ -43,35 +43,33 @@ function Cart(props) {
 
                 </div>
                 <div className="col-2 col-delete" >
-                    <a onClick={() => deleteProduct(product.product_id)}><i className="fa fa-times" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0);" onClick={() => deleteProduct(product._id)}><i className="fa fa-times" aria-hidden="true"></i></a>
                 </div>
             </div>
             {/* mobile */}
             <div className="cart__lists-mobile ">
-                <div className="shop-item border d-flex p-2" key={product.product_id}>
+                <div className="shop-item border d-flex p-2" key={product._id}>
                     <img className="side-product__img" src={product.product_img} alt="Card image"></img>
-                    <div className="side-product__title mx-4 ">
-                        <Link to="/detail" onClick={() => viewProduct(product.product_id)} className="title ml-auto">{product.product_name}</Link>
+                    <div className="side-product__title  ">
+                        <Link to="/detail" onClick={() => viewProduct(product._id)} className="title">{product.product_name}</Link>
                         <p className="item-price">{`$${product.product_price - Math.ceil(product.product_price * (product.product_sale / 100))}`}</p>
 
                         <div className="d-flex cart_quantity align-items-center">
                             <span className="input-group-btn">
-                                <button type="button" className="btn border rounded-0" onClick={() => miunusProduct(product.product_id)} >
+                                <button type="button" className="btn border rounded-0" onClick={() => miunusProduct(product._id)} >
                                     <i className="fa fa-minus" aria-hidden="true"></i>
                                 </button>
                             </span>
-                            <input type="text" name="quant[1]" className="form-control input-number text-center border-top border-bottom rounded-0" value={product.product_amount} />
+                            <div  className="form-control input-number text-center border-top border-bottom rounded-0" >{product.product_amount}</div>
                             <span className="input-group-btn">
-                                <button type="button" className="btn border rounded-0" onClick={() => addProduct(product.product_id)}>
+                                <button type="button" className="btn border rounded-0" onClick={() => addProduct(product._id)}>
                                     <i className="fa fa-plus" aria-hidden="true"></i>
                                 </button>
                             </span>
-
-                            <a className="side-product__close ml-auto " onClick={() => deleteProduct(product.product_id)}>
-                                <i class="fa fa-trash " aria-hidden="true"></i>
-                            </a>
-
                         </div>
+                        <a href="javascript:void(0);" className="side-product__close ml-auto " onClick={() => deleteProduct(product._id)}>
+                            <i className="fa fa-trash " aria-hidden="true"></i>
+                        </a>
 
                     </div>
 
