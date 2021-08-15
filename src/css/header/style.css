@@ -40,13 +40,33 @@
 
 /* header-logo */
 .header-logo .logo-icon .icon-items{
+        width: 30px;
+        height: 30px;
         position: relative;
+    }
+    .header-logo .logo-icon .icon-items a{
+        width: 30px;
+        height: 30px;
+        color: gray;
     }
     .header-logo .logo-icon .icon-items:hover{
       cursor: pointer;
     }
     .header-logo .logo-icon .icon-items img{
-        width: 35px;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .header-logo .logo-icon .icon-items .loginSuccess{
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: none;
+        border: solid 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: gray;
     }
     .header-logo .logo-icon .search {
         position: relative;
@@ -54,7 +74,7 @@
     .header-logo .logo-icon .search .input_search{
         position: absolute;
         right: 0;
-        width: 50vw;
+        /* width: 50vw; */
         z-index: 4;
     }
     .header-logo .logo-icon .search .input_search button{
@@ -109,8 +129,11 @@
         /* .header-logo .logo-icon .input_search{
             width: 0px;
         } */
+        .header-logo .logo-icon .search .input_search{
+            right: -100px;
+        }
         .header-logo .logo-icon .input_search input{
-            /* width:  20%; */
+            width:  50vw;
             border: solid 1px;
             border-color: #d6d6d6;
         }
@@ -174,7 +197,7 @@
     width: 450px;
     background-color: white;
     overflow-x: scroll;
-    transition: 0.5s;
+    transition: 0.7s;
     padding-top: 60px;
     }
     .sideshop-open{

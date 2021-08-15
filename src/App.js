@@ -141,7 +141,13 @@ class Index extends React.Component {
                 passwordRegError:"",
                 emailRegError:"",
             },
-            isSuccess: ""
+            errorLoginMsg:{
+                usernameLoginError:"",
+                passwordLoginError:"",
+                emailLoginError:"",
+            },
+            isSuccess: "",
+            isLogin: false
         }
     }
 
@@ -193,9 +199,9 @@ class Index extends React.Component {
             }
         }, () =>
             axios
-                .post("https://606435c9f0919700177852da.mockapi.io/account_order", accountOrder)
+                .post("http://localhost:3001/userinfor", accountOrder)
                 .then(res => {
-                    // console.log(res.data)
+                    console.log(res.data)
                 })
                 .catch(error => { })
         )
@@ -553,6 +559,8 @@ class Index extends React.Component {
         const namevalidate = this.validateName(usernameRegError)
         const passwordvalidate = this.validatePassword(passwordRegError)
         const emailvalidate = this.validateEmail(emailRegError)
+
+       
         
         if(namevalidate  || passwordvalidate || emailvalidate ){
             this.setState({
@@ -565,6 +573,7 @@ class Index extends React.Component {
             })
             return false
         }
+        
         return true
         
         
@@ -579,10 +588,10 @@ class Index extends React.Component {
         
         if(namevalidate  || passwordvalidate ){
             this.setState({
-                errorMsg:{
-                    ...this.state.errorMsg,
-                    usernameRegError: namevalidate ,
-                    passwordRegError: passwordvalidate
+                errorLoginMsg:{
+                    ...this.state.errorLoginMsg,
+                    usernameLoginError: namevalidate ,
+                    passwordLoginError: passwordvalidate
                 },
             })
             return false
@@ -618,26 +627,91 @@ class Index extends React.Component {
     
     registerPosts = async () =>{
         const {registerAccount} = this.state
-        this.setState({
-            loading: true
-        })
+        // this.setState({
+        //     loading: true
+        // })
+      
         await axios
+        
         .post("http://localhost:3001/users", registerAccount)
+        .catch((res)=>{
+            if(res.response){
+                if(res.response.data.name) {
+                    this.setState({
+                        errorMsg:{
+                            ...this.state.errorMsg,
+                            usernameRegError: res.response.data.Msg,
+                        }
+                    },()=>{
+                        this.setFail()
+                    })
+                    return false
+                } 
+                if(res.response.data.email) {
+                    this.setState({
+                        errorMsg:{
+                            ...this.state.errorMsg,
+                            emailRegError: res.response.data.Msg,
+                        },
+                    },()=>{
+                        this.setFail()
+                    })
+                    return false
+                } 
+            }
+        })
         .then((res)=>{
+            if(res.status === 200){
+                this.setSuccess()
+            }
             
         })
     }
 
     loginPosts = async () =>{
+        console.log()
         const {loginAccount} = this.state
-        this.setState({
-            loading: true
+       
+        await axios
+        .post("http://localhost:3001/users/getuser", loginAccount)
+        .catch((res) =>{
+            console.log( res.response);
+            if(res.response){
+                if(res.response.data.name){
+                    this.setState({
+                        errorLoginMsg:{
+                            ...this.state.errorLoginMsg,
+                            usernameLoginError: res.response.data.Msg,
+                            passwordLoginError: res.response.data.Msg,
+                        }
+                    },()=>{
+                        this.setFail()
+                    })
+                    return false
+                }   
+                if(res.response.data.password){
+                    this.setState({
+                        errorLoginMsg:{
+                            ...this.state.errorLoginMsg,
+                            passwordLoginError: res.response.data.Msg,
+                        }
+                    },()=>{
+                        this.setFail()
+                    })
+                    return false
+                }   
+            }
         })
-        // await axios
-        // .post("http://localhost:3001/send/users", loginAccount)
-        // .then((res)=>{
-        //     console.log(res.data)
-        // })
+        .then((res)=>{
+            console.log(res.status)
+            if(res.status === 200){
+                this.setSuccess()
+                this.setState({
+                    isLogin: true
+                })
+            }
+            
+        })
     }
 
     btnReg = (e) =>{
@@ -663,7 +737,6 @@ class Index extends React.Component {
                         emailRegError: ""
                     },
                 },()=>{
-                    this.setSuccess()
                     this.registerPosts()
                 })
                 
@@ -692,7 +765,7 @@ class Index extends React.Component {
         })
     }
 
-    btnLogin = () =>{
+    btnLogin = async () =>{
         const validate = this.validateLogin()
         console.log("abc")
         if(!validate){
@@ -704,13 +777,13 @@ class Index extends React.Component {
         if(validate ){
             if(validate === true){
                 this.setState({
-                    errorMsg:{
-                        ...this.state.errorMsg,
-                        usernameRegError: "" ,
-                        passwordRegError: "" 
+                    errorLoginMsg:{
+                        ...this.state.errorLoginMsg,
+                        usernameLoginError: "" ,
+                        passwordLoginError: "" 
                     },
                 },()=>{
-                    this.setSuccess()
+                    
                     this.loginPosts()
                 })
                 
@@ -728,7 +801,7 @@ class Index extends React.Component {
     render() {
         
         //   state
-        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess } = this.state
+        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin } = this.state
         const filterData = productsList
             .filter((product) =>
                 product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
@@ -838,10 +911,16 @@ class Index extends React.Component {
                                                     </div>
                                                 </div>
                                                 <div className="icon-items mx-1">
-                                                    <Link to="/login" >
+                                                    <Link to="/login" style={{display: isLogin ? "none":"block" }}>
                                                         <img src={account} alt=""></img>
                                                     </Link>
-                                                    
+                                                    <Link to="/login" style={{display: isLogin ? "block":"none" }}>
+                                                        <div className="loginSuccess">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image-fill" viewBox="0 0 16 16">
+                                                                <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
+                                                            </svg>
+                                                        </div>
+                                                    </Link>
                                                 </div>
                                                 <div onClick={this.openShop} className="icon-items mx-1">
                                                     <img src={card} alt="" ></img>
@@ -861,7 +940,7 @@ class Index extends React.Component {
                                             </div>
                                         </div>
                                         {/* nav side shop */}
-                                        <div id="shop-side" className={sideShop_isShow ? 'sideshop-open sideshop' : 'sideshop'} style={{ top: offset ? "64px" : 0 }}>
+                                        <div id="shop-side" className={sideShop_isShow ? 'sideshop-open sideshop' : 'sideshop'} style={{ top: offset > 140 ? "64px" : 0 }}>
                                             <a href="javascript:void(0);" className="closebtn" onClick={this.openShop}>&times;</a>
 
                                             {
@@ -1107,6 +1186,7 @@ class Index extends React.Component {
                                 UserNameLogin={this.UserNameLogin}
                                 PasswordLogin={this.PasswordLogin}
                                 btnLogin={this.btnLogin}
+                                errorLoginMsg={errorLoginMsg}
                             />
                         </Route>
                         

@@ -10,7 +10,7 @@ function Success(props) {
 
     
     const success = () =>{
-        console.log(isSuccess)
+        // console.log(isSuccess)
         if(isSuccess === ""){
             return "Success"
         }if(isSuccess === true){
@@ -21,7 +21,7 @@ function Success(props) {
     }
 
     const content = () =>{
-        console.log(isSuccess)
+        // console.log(isSuccess)
         if(isSuccess === true){
             return "Thành công"
         }if(isSuccess === false){

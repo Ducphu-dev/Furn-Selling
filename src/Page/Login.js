@@ -13,7 +13,7 @@ function LoginPage(props) {
 
     const { product } = props
     // funtion
-    const { addProduct, viewProduct, UserNameReg, PasswordReg, EmailReg, btnReg, errorMsg, btnLogin, UserNameLogin, PasswordLogin } = props
+    const { addProduct, viewProduct, UserNameReg, PasswordReg, EmailReg, btnReg, errorMsg, btnLogin, UserNameLogin, PasswordLogin, errorLoginMsg } = props
 
     const [toggleTabs, setToggleTabs] = useState(1)
 
@@ -60,12 +60,12 @@ function LoginPage(props) {
                         <div className={toggleTabs === 1 ? "form-signin active" : "form-signin"} >
                             <div className="input">
                                 <input className="input-form" onChange={UserNameLogin} type="text" placeholder="Username"/>
-                                <span>{errorMsg.usernameRegError}</span>
+                                <span>{errorLoginMsg.usernameLoginError}</span>
                             </div>
                             
                             <div className="input">
                                 <input className="input-form" onChange={PasswordLogin} type="password" placeholder="Password"/>
-                                <span>{errorMsg.passwordRegError}</span>
+                                <span>{errorLoginMsg.passwordLoginError}</span>
                             </div>
                             
                             <div className="forgot">
