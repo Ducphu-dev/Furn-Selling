@@ -12,6 +12,8 @@ import Product_Side from './component/Product-Side';
 import Shop_page from './Page/Shop';
 import Home_page from './Page/Home';
 import Cart_page from './Page/Cart';
+import Contact from './Page/Contact';
+import Aboutus from './Page/Aboutus';
 import Details_page from './Page/Details';
 import CheckOut_Page from './Page/CheckOut';
 import Success_Page from './Page/SuccessCheckOut';
@@ -1004,7 +1006,7 @@ class Index extends React.Component {
                                                     <Link to="/shop" className="nav-link"> Shop</Link>
                                                 </li>
                                                 <li className="nav-item py-1">
-                                                    <a className="nav-link" href="">Bogs</a>
+                                                    <a className="nav-link" href="">Blogs</a>
                                                 </li>
                                                 <li className="nav-item py-1">
                                                     <a className="nav-link" href="#">Conntact us</a>
@@ -1024,7 +1026,7 @@ class Index extends React.Component {
                                                 <Link to="/" className="nav-link">Home</Link>
                                             </li>
                                             <li className="nav-item py-1">
-                                                <a className="nav-link" href="#">About us</a>
+                                            <Link to="/aboutus" className="nav-link">About us</Link>
                                             </li>
                                             <li className="nav-item py-1">
                                                 <Link to="/shop" className="nav-link">Shop</Link>
@@ -1041,7 +1043,7 @@ class Index extends React.Component {
                                                 </span>
                                             </li>
                                             <li className="nav-item py-1">
-                                                <a className="nav-link" href="#">Contact us</a>
+                                                <Link to="/contact" className="nav-link">Contact</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -1055,7 +1057,7 @@ class Index extends React.Component {
                                                 <Link to="/" className="nav-link">Home</Link>
                                             </li>
                                             <li className="nav-item py-1">
-                                                <a className="nav-link" href="#">About us</a>
+                                                <Link to="/aboutus" className="nav-link">About us</Link>
                                             </li>
                                             <li className="nav-item py-1">
                                                 <Link to="/shop" className="nav-link">Shop</Link>
@@ -1072,7 +1074,7 @@ class Index extends React.Component {
                                                 </span>
                                             </li>
                                             <li className="nav-item py-1">
-                                                <a className="nav-link" href="#">Contact us</a>
+                                                <Link to="/contact" className="nav-link">Contact</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -1166,6 +1168,12 @@ class Index extends React.Component {
                                 formEmail={this.formEmail}
                                 orderBtn={this.orderBtn}
                             />
+                        </Route>
+                        <Route path="/contact">
+                            <Contact/>
+                        </Route>
+                        <Route path="/aboutus">
+                            <Aboutus/>
                         </Route>
                         <Route path="/success" >
                             <ScrollToTop/>
