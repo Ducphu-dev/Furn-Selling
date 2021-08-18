@@ -70,7 +70,7 @@ class Index extends React.Component {
             sideShop_isShow: false,
             sideNav_isShow: false,
             amount_product_details: 1,
-            amount_product_add: JSON.parse(localStorage.getItem("amount_product_add")) || [],
+            amount_product_add: [],
             productsList: [],
             products_recommendList: [
                 {
@@ -149,7 +149,14 @@ class Index extends React.Component {
                 emailLoginError:"",
             },
             isSuccess: "",
-            isLogin: false
+            isLogin: false,
+            addToCard: {
+                userCard: []
+            },
+            // accountLogined:{
+            //     username: "",
+            //     passwordLogin: ""
+            // },
         }
     }
 
@@ -158,7 +165,17 @@ class Index extends React.Component {
  
 
     componentDidMount(){
-        window.scrollTo(0, 0)
+        const loggedInUser = JSON.parse(sessionStorage.getItem("card"));
+        if (loggedInUser) {
+            // const foundUser = JSON.parse(loggedInUser);
+            console.log(loggedInUser)
+            this.setState({
+                isLogin: true,
+                amount_product_add: loggedInUser
+            })
+        }
+        
+
         const fetchPosts = async () =>{
             this.setState({
                 loading: true
@@ -175,7 +192,7 @@ class Index extends React.Component {
             })
         }
         fetchPosts();
-        console.log(this.state.isSuccess)
+        // console.log(this.state.isSuccess)
     }
 
     componentDidUpdate(){
@@ -184,7 +201,7 @@ class Index extends React.Component {
                 offset: window.pageYOffset
             })
         }
-        
+        sessionStorage.setItem('card',JSON.stringify(this.state.amount_product_add));
     }
    
    
@@ -203,17 +220,13 @@ class Index extends React.Component {
             axios
                 .post("http://localhost:3001/userinfor", accountOrder)
                 .then(res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                 })
                 .catch(error => { })
         )
     }
 
-    saveToLocalStorage = () => {
-        localStorage.setItem("amount_product_add", JSON.stringify(this.state.amount_product_add));
-
-    };
-
+    
  
 
 
@@ -244,7 +257,7 @@ class Index extends React.Component {
         })
     }
 
-    addProduct = id => {
+    addProduct = async id => {
         let findedIndex = this.state.amount_product_add.find(product => product._id === id);
         if (findedIndex) {
             let product = this.state.amount_product_add.map(product => {
@@ -256,27 +269,52 @@ class Index extends React.Component {
                 }
                 return product;
             })
-            this.setState({
+            const add = await this.setState({
                 productsList: this.state.productsList,
                 amount_product_details: 1,
                 amount_product_add: product,
                 sideShop_isShow: true,
-            }, () => {
+                
+            },()=>{
                 this.saveToLocalStorage()
             })
         } else {
             let findAdd = this.state.productsList.find(product => product._id === id);
             const newList = [...this.state.amount_product_add, findAdd]
-            this.setState({
+            const add = await this.setState({
                 amount_product_add: newList,
                 amount_product_details: 1,
                 sideShop_isShow: true,
-            }, () => {
+                
+            },()=>{
                 this.saveToLocalStorage()
             })
+            
         }
 
     }
+
+    saveToLocalStorage = async () => {
+        const id = sessionStorage.getItem('id');
+        console.log(id)
+        
+        const add = await this.setState({
+            addToCard:{
+                ...this.state.addToCard,
+                userCard: this.state.amount_product_add
+            }
+        })
+        console.log(this.state.addToCard)
+        axios
+            .patch(`http://localhost:3001/users/${id}`, this.state.addToCard)
+            .then(res => {
+                // console.log(res)
+            })
+            .catch(error => { 
+            })
+
+    };
+
 
 
     deleteProduct = id => {
@@ -695,6 +733,7 @@ class Index extends React.Component {
                     this.setState({
                         errorLoginMsg:{
                             ...this.state.errorLoginMsg,
+                            usernameLoginError: res.response.data.Msg,
                             passwordLoginError: res.response.data.Msg,
                         }
                     },()=>{
@@ -709,8 +748,13 @@ class Index extends React.Component {
             if(res.status === 200){
                 this.setSuccess()
                 this.setState({
-                    isLogin: true
+                    isLogin: true,
+                    amount_product_add: res.data.usercard
                 })
+                // console.log(res.data)
+                sessionStorage.setItem('username',res.data.userName );
+                sessionStorage.setItem('id',res.data.userId );
+                sessionStorage.setItem('card',JSON.stringify(res.data.usercard));
             }
             
         })
@@ -769,7 +813,6 @@ class Index extends React.Component {
 
     btnLogin = async () =>{
         const validate = this.validateLogin()
-        console.log("abc")
         if(!validate){
             if(validate !== true){
                 this.setFail()
@@ -803,6 +846,7 @@ class Index extends React.Component {
     render() {
         
         //   state
+        
         const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin } = this.state
         const filterData = productsList
             .filter((product) =>
@@ -842,7 +886,6 @@ class Index extends React.Component {
                     return -1;
                 }
             })
-            // console.log(filterData)
              // get currents posts
             const indexOfLastPost = currentPage * postsPerPage;
             const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -918,7 +961,7 @@ class Index extends React.Component {
                                                     </Link>
                                                     <Link to="/login" style={{display: isLogin ? "block":"none" }}>
                                                         <div className="loginSuccess">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image-fill" viewBox="0 0 16 16">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-image-fill" viewBox="0 0 16 16">
                                                                 <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
                                                             </svg>
                                                         </div>
@@ -1090,6 +1133,7 @@ class Index extends React.Component {
                         <Route path="/" exact>
                             <ScrollToTop/>
                             <Home_page
+                                key="1"
                                 products_recommendList={products_recommendList}
                                 productsList={productsList}
                                 addProduct={this.addProduct}
