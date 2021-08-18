@@ -37,7 +37,7 @@ function HomePage(props) {
 
     return (
 
-        <div>
+        <div key="1">
             {/* INDEX start */}
             <main className="main">
                 <div className="main-slider">
@@ -133,7 +133,8 @@ function HomePage(props) {
                                 {
                                     productsList.map((product) => {
                                         return (
-                                            <Product key={product._id}
+                                            <Product 
+                                                key={product._id}
                                                 addProduct={addProduct}
                                                 product={product}
                                                 viewProduct={viewProduct}
@@ -167,7 +168,8 @@ function HomePage(props) {
                                 {
                                     productsList.map((product) => {
                                         return (
-                                            <Product key={product._id}
+                                            <Product 
+                                                key={product._id}
                                                 addProduct={addProduct}
                                                 product={product}
                                                 viewProduct={viewProduct}
@@ -184,7 +186,8 @@ function HomePage(props) {
                                 {
                                     productsList.map((product) => {
                                         return (
-                                            <Product key={product._id}
+                                            <Product 
+                                                key={product._id}
                                                 addProduct={addProduct}
                                                 product={product}
                                                 viewProduct={viewProduct}
@@ -247,7 +250,8 @@ function HomePage(props) {
                                     recommend_new_list.map((product, index) => {
                                         return (
                                             <SwiperSlide>
-                                                <Product key={product._id}
+                                                <Product 
+                                                key={product._id}
                                                 addProduct={addProduct}
                                                 product={product}
                                                 viewProduct={viewProduct}
