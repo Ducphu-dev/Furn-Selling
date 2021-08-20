@@ -71,7 +71,7 @@ function LoginPage(props) {
                             <div className="forgot">
                                 <a href="">Forgot Password?</a>
                             </div>
-                            <input className="btn-submit" onClick={btnLogin} type="submit" value="Login"/>
+                            <input className="btn btn-primary btn-hover-dark mt-4 rounded-0" onClick={btnLogin} type="submit" value="Login"/>
                         </div>
                         <div className={toggleTabs === 2 ? "form-register active" : "form-register"}>
                             <div className="input">
@@ -89,7 +89,7 @@ function LoginPage(props) {
                                 <span>{errorMsg.emailRegError}</span>
                             </div>
                             
-                            <input className="btn-submit" type="submit" value="Register" onClick={btnReg}/>
+                            <input className="btn btn-primary btn-hover-dark mt-4 rounded-0" type="submit" value="Register" onClick={btnReg}/>
                         </div>
                     </div>
                 </div>

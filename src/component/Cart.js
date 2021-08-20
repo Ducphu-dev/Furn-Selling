@@ -21,8 +21,8 @@ function Cart(props) {
                 <div className="col-2 col-price" >
                     {`$${product.product_price - Math.ceil(product.product_price * (product.product_sale / 100))}`}
                 </div>
-                <div className="col-2 col-quantity" >
-                    <div className="d-flex align-items-center">
+                <div className="col-2 col-quantity " >
+                    <div className="d-flex align-items-center ">
                         <span className="input-group-btn">
                             <button type="button" className="btn border rounded-0" onClick={() => miunusProduct(product._id)} >
                                 <i className="fa fa-minus" aria-hidden="true"></i>

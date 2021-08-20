@@ -19,6 +19,8 @@ import CheckOut_Page from './Page/CheckOut';
 import Success_Page from './Page/SuccessCheckOut';
 import Login_Page from './Page/Login';
 import Success from './component/Success';
+import AccountPage from './Page/Account';
+
 // data
 import search from './img/search.png';
 import account from './img/account.png';
@@ -201,7 +203,10 @@ class Index extends React.Component {
                 offset: window.pageYOffset
             })
         }
-        sessionStorage.setItem('card',JSON.stringify(this.state.amount_product_add));
+        if(this.state.isLogin === true){
+            sessionStorage.setItem('card',JSON.stringify(this.state.amount_product_add));
+        }
+        // 
     }
    
    
@@ -257,41 +262,44 @@ class Index extends React.Component {
         })
     }
 
-    addProduct = async id => {
-        let findedIndex = this.state.amount_product_add.find(product => product._id === id);
-        if (findedIndex) {
-            let product = this.state.amount_product_add.map(product => {
-                if (product._id === id) {
-                    return {
-                        ...product,
-                        product_amount: product.product_amount + this.state.amount_product_details
+    addProduct = async (id, e) => {
+        
+            let findedIndex = this.state.amount_product_add.find(product => product._id === id);
+            if (findedIndex) {
+                let product = this.state.amount_product_add.map(product => {
+                    if (product._id === id) {
+                        return {
+                            ...product,
+                            product_amount: product.product_amount + this.state.amount_product_details
+                        }
                     }
-                }
-                return product;
-            })
-            const add = await this.setState({
-                productsList: this.state.productsList,
-                amount_product_details: 1,
-                amount_product_add: product,
-                sideShop_isShow: true,
+                    return product;
+                })
+                const add = await this.setState({
+                    productsList: this.state.productsList,
+                    amount_product_details: 1,
+                    amount_product_add: product,
+                    sideShop_isShow: true,
+                    
+                },()=>{
+                    this.saveToLocalStorage()
+                })
+            } else {
+                let findAdd = this.state.productsList.find(product => product._id === id);
+                const newList = [...this.state.amount_product_add, findAdd]
+                const add = await this.setState({
+                    amount_product_add: newList,
+                    amount_product_details: 1,
+                    sideShop_isShow: true,
+                    
+                },()=>{
+                    this.saveToLocalStorage()
+                })
                 
-            },()=>{
-                this.saveToLocalStorage()
-            })
-        } else {
-            let findAdd = this.state.productsList.find(product => product._id === id);
-            const newList = [...this.state.amount_product_add, findAdd]
-            const add = await this.setState({
-                amount_product_add: newList,
-                amount_product_details: 1,
-                sideShop_isShow: true,
-                
-            },()=>{
-                this.saveToLocalStorage()
-            })
-            
-        }
+            }
 
+        
+        
     }
 
     saveToLocalStorage = async () => {
@@ -744,7 +752,7 @@ class Index extends React.Component {
             }
         })
         .then((res)=>{
-            console.log(res.status)
+            // console.log(res.status)
             if(res.status === 200){
                 this.setSuccess()
                 this.setState({
@@ -835,6 +843,17 @@ class Index extends React.Component {
             }
             
         } 
+    }
+
+    isLogout = async () =>{
+        this.setSuccess()
+        await this.setState({
+            isLogin: false,
+            amount_product_add: []
+        })
+        // console.log(res.data)
+        sessionStorage.clear();
+        
     }
 
     
@@ -959,7 +978,7 @@ class Index extends React.Component {
                                                     <Link to="/login" style={{display: isLogin ? "none":"block" }}>
                                                         <img src={account} alt=""></img>
                                                     </Link>
-                                                    <Link to="/login" style={{display: isLogin ? "block":"none" }}>
+                                                    <Link to="/account" style={{display: isLogin ? "block":"none" }}>
                                                         <div className="loginSuccess">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-image-fill" viewBox="0 0 16 16">
                                                                 <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
@@ -1030,7 +1049,7 @@ class Index extends React.Component {
                                                             </p>
                                                         </div>
                                                         <div></div>
-                                                        <Link to="/cart" className="btn px-5 py-3" role="button">View Cart</Link>
+                                                        <Link to="/cart" className="btn btn-primary btn-hover-dark mt-4 py-2 px-3" role="button">View Cart</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1144,6 +1163,7 @@ class Index extends React.Component {
                                 product_news_2={product_news_2}
                                 product_news_3={product_news_3}
                                 list__recommend={list__recommend}
+                                isLogin={isLogin}
                             />
                         </Route>
                         <Route path="/shop" >
@@ -1163,6 +1183,7 @@ class Index extends React.Component {
                                 currentPage= {currentPage}
                                 paginatePrev={this.paginatePrev}
                                 paginateNext={this.paginateNext}
+                                isLogin={isLogin}
                             />
                         </Route>
                         <Route path="/detail" >
@@ -1179,6 +1200,7 @@ class Index extends React.Component {
                                 plus_details={this.plus_details}
                                 minus_details={this.minus_details}
                                 amount_product_details={amount_product_details}
+                                isLogin={isLogin}
                             />
                         </Route>
                         <Route path="/cart">
@@ -1214,9 +1236,11 @@ class Index extends React.Component {
                             />
                         </Route>
                         <Route path="/contact">
+                            <ScrollToTop/>
                             <Contact/>
                         </Route>
                         <Route path="/aboutus">
+                            <ScrollToTop/>
                             <Aboutus/>
                         </Route>
                         <Route path="/success" >
@@ -1239,6 +1263,12 @@ class Index extends React.Component {
                                 PasswordLogin={this.PasswordLogin}
                                 btnLogin={this.btnLogin}
                                 errorLoginMsg={errorLoginMsg}
+                            />
+                        </Route>
+                        <Route path="/account" >
+                            <ScrollToTop/>
+                            <AccountPage 
+                                btnLogout = {this.isLogout}
                             />
                         </Route>
                         

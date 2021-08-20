@@ -22,7 +22,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 function DetailPage(props) {
     const listRecommend = 4
     //   state
-    const { productsList, sercurity_poli, delivery_poli, return_poli, addProduct, viewProduct, amount_product_details,findedIndexViewDetail } = props
+    const { productsList, sercurity_poli, delivery_poli, return_poli, addProduct, viewProduct, amount_product_details,findedIndexViewDetail, isLogin } = props
 
     const { minus_details, plus_details } = props
     const recommend = productsList.filter((product, index) => index < listRecommend)
@@ -72,6 +72,7 @@ function DetailPage(props) {
                                         plus_details={plus_details}
                                         minus_details={minus_details}
                                         amount_product_details={amount_product_details}
+                                        isLogin={isLogin}
                                     />
                                 )
                             })

@@ -40,7 +40,7 @@ function Product(props) {
 
     const { product } = props
     // funtion
-    const { addProduct, viewProduct } = props
+    const { addProduct, viewProduct, isLogin } = props
 
     return (
         <div className="col-6 col-md-4 col-xl-3 product-item" key={product._id}>
@@ -71,7 +71,11 @@ function Product(props) {
                             </div>
                         </div>
                         <div className="btn-add__overlay d-flex justify-content-center btn-add__overlay--primary">
-                            <a className="product-btn__view btn" role="button" onClick={() => addProduct(product._id)}> Add to cart</a>
+                            {/* <a className="product-btn__view btn" role="button" onClick={() => addProduct(product._id)}> Add to cart</a> */}
+                            {
+                                isLogin ? <a  className="product-btn__view btn" role="button" onClick={() => addProduct(product._id)}> Add to cart</a>:<Link to="/login" className="product-btn__view btn" role="button" > Add to cart</Link>
+                            }
+                            
                         </div>
                     </div>
                 </div>

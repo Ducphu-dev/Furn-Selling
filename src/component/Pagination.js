@@ -27,7 +27,7 @@ function Pagination({ postsPerPage, totalPosts, paginate, currentPage, paginateP
     // console.log(pageNumber)
     return (
        <nav>
-           <ul className="pagination pagination text-center">
+           <ul className="pro-pagination-style text-center mb-md-30px mb-lm-30px mt-30px">
                 <li className="page-item">
                     <a onClick={()=>paginatePrev(currentPage) } className="pagination-btn__like btn">Pre</a>
                 </li>

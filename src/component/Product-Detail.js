@@ -3,10 +3,11 @@ import '../App.css';
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
+import { Link } from 'react-router-dom';
 
 function Product_Detail(props) {
 
-    const { product, delivery_poli, sercurity_poli, return_poli, amount_product_details } = props
+    const { product, delivery_poli, sercurity_poli, return_poli, amount_product_details, isLogin } = props
     // function
     const { addProduct, plus_details, minus_details, add_more_product } = props
 
@@ -73,7 +74,10 @@ function Product_Detail(props) {
                                 </span>
                             </div>
                             <div className="detail__add mx-3">
-                                <a onClick={() => addProduct(product._id)} className="detail__add-btn btn btn-warning px-5 py-2" role="button">Add to cart</a>
+                            {
+                                isLogin ? <a onClick={() => addProduct(product._id)} className="detail__add-btn btn btn-warning px-5 py-2" role="button">Add to cart</a>:<Link to="/login" className="detail__add-btn btn btn-warning px-5 py-2" role="button" > Add to cart</Link>
+                            }
+                                
                             </div>
                         </div>
                     </div>

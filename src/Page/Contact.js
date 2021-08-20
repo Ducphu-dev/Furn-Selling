@@ -1,8 +1,5 @@
 
 // css
-import '../css/header/style.css';
-import '../css/main/style.css';
-import '../css/footer/style.css';
 
 
 // componen
@@ -101,7 +98,7 @@ function Contact(props) {
                                     </div>
                                     <div className="col-lg-12" data-aos="fade-up" data-aos-delay="200">
                                         <textarea name="message" placeholder="Your Message*"></textarea>
-                                        <button className="btn btn-primary btn-hover-dark mt-4" data-aos="fade-up" data-aos-delay="200" type="submit">SEND</button>
+                                        <button className="btn btn-primary btn-hover-dark mt-4 rounded-0" data-aos="fade-up" data-aos-delay="200" type="submit">SEND</button>
                                     </div>
                                 </div>
                             </form>

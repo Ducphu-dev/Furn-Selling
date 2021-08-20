@@ -20,7 +20,7 @@ import 'swiper/swiper.scss';
 
 function HomePage(props) {
     //   state
-    const { productsList, products_recommendList, DetailsPage, product_sale_1, product_sale_2, list__recommend } = props
+    const { productsList, products_recommendList, DetailsPage, product_sale_1, product_sale_2, list__recommend, isLogin } = props
 
 
     // function
@@ -139,6 +139,7 @@ function HomePage(props) {
                                                 product={product}
                                                 viewProduct={viewProduct}
                                                 DetailsPage={DetailsPage}
+                                                isLogin={isLogin}
                                             />
                                         )
                                     })
@@ -156,6 +157,7 @@ function HomePage(props) {
                                                 product={product}
                                                 viewProduct={viewProduct}
                                                 DetailsPage={DetailsPage}
+                                                isLogin={isLogin}
                                             />
                                         )
                                     })
@@ -174,6 +176,7 @@ function HomePage(props) {
                                                 product={product}
                                                 viewProduct={viewProduct}
                                                 DetailsPage={DetailsPage}
+                                                isLogin={isLogin}
                                             />
                                         )
                                     })
@@ -192,6 +195,7 @@ function HomePage(props) {
                                                 product={product}
                                                 viewProduct={viewProduct}
                                                 DetailsPage={DetailsPage}
+                                                isLogin={isLogin}
                                             />
                                         )
                                     })
@@ -256,6 +260,7 @@ function HomePage(props) {
                                                 product={product}
                                                 viewProduct={viewProduct}
                                                 DetailsPage={DetailsPage}
+                                                isLogin={isLogin}
                                             />
                                             </SwiperSlide>
                                             

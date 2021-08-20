@@ -104,6 +104,7 @@
         width: 700px;
         border: solid 1px;
         border-color: #d6d6d6;
+        background:white ;
     }
     .header-logo .logo-icon .abc{
         position: absolute;
@@ -174,6 +175,10 @@
         font-size: 36px;
         margin-left: 50px;
         cursor: pointer;
+    }
+
+    .sidenav .navbar-nav li{
+      text-align: center;
     }
     
     @media screen and (max-height: 450px) {

@@ -19,7 +19,7 @@ function ShopPage(props) {
     const { filterData, loading, currentPosts } = props
     
     // function
-    const { addProduct, viewProduct, searchFilterPrice, searchFilterName, postsPerPage, paginate, currentPage , paginatePrev, paginateNext} = props
+    const { addProduct, viewProduct, searchFilterPrice, searchFilterName, postsPerPage, paginate, currentPage , paginatePrev, paginateNext, isLogin} = props
     
     // const amount_product_view = productsList.filter(product => product.product__add === product_id)
     if(loading){
@@ -153,6 +153,7 @@ function ShopPage(props) {
                                             addProduct={addProduct}
                                             product={product}
                                             viewProduct={viewProduct}
+                                            isLogin={isLogin}
                                         />
                                     )
                                 })
