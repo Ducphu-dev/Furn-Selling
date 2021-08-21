@@ -20,6 +20,7 @@ import Success_Page from './Page/SuccessCheckOut';
 import Login_Page from './Page/Login';
 import Success from './component/Success';
 import AccountPage from './Page/Account';
+import AdminPage from './Page/AdminLogin';
 
 // data
 import search from './img/search.png';
@@ -155,10 +156,14 @@ class Index extends React.Component {
             addToCard: {
                 userCard: []
             },
-            // accountLogined:{
-            //     username: "",
-            //     passwordLogin: ""
-            // },
+            loginAdmin:{
+                adminName: "",
+                adminPassword: ""
+            },
+            errorMsgAdmin:{
+                adminName:"",
+                adminPassword:"",
+            },
         }
     }
 
@@ -559,6 +564,9 @@ class Index extends React.Component {
         })
     }
 
+
+    // validate
+        //  ------- Register --------- //
     validateName = (nameError) => {
         if(!this.state.registerAccount.usernameReg){
             return nameError = "User name can not be blank!"
@@ -582,23 +590,8 @@ class Index extends React.Component {
             return emailError = "Email is wrong!"
         }
     }
-
-    validateNameLogin = (nameError) => {
-        if(!this.state.loginAccount.usernameLogin){
-            return nameError = "User name can not be blank!"
-            
-        }
-    }
-
-    validatePasswordLogin = (passwordError) => {
-        if(!this.state.loginAccount.passwordLogin){
-            return passwordError = "Password can not be blank!"
-            
-        }
-    }
-
- 
-
+       
+    // 
     validateReg = () =>{
         let usernameRegError = "";
         let passwordRegError = "";
@@ -608,8 +601,6 @@ class Index extends React.Component {
         const passwordvalidate = this.validatePassword(passwordRegError)
         const emailvalidate = this.validateEmail(emailRegError)
 
-       
-        
         if(namevalidate  || passwordvalidate || emailvalidate ){
             this.setState({
                 errorMsg:{
@@ -625,6 +616,21 @@ class Index extends React.Component {
         return true
         
         
+    }
+
+     //  ------- Login --------- //
+     validateNameLogin = (nameError) => {
+        if(!this.state.loginAccount.usernameLogin){
+            return nameError = "User name can not be blank!"
+            
+        }
+    }
+
+    validatePasswordLogin = (passwordError) => {
+        if(!this.state.loginAccount.passwordLogin){
+            return passwordError = "Password can not be blank!"
+            
+        }
     }
 
     validateLogin = () =>{
@@ -649,6 +655,43 @@ class Index extends React.Component {
         
     }
     
+
+    //  ------- Admin --------- //
+    validateAdminName = (nameError) => {
+        if(!this.state.loginAdmin.adminName){
+            return nameError = "Admin name can not be blank!"
+            
+        }
+    }
+
+    validateAdminPassword = (passwordError) => {
+        if(!this.state.loginAdmin.adminPassword){
+            return passwordError = "Password can not be blank!"
+            
+        }
+    }
+
+    validateAdmin = () =>{
+        let usernameLoginError = "";
+        let passwordLoginError = "";
+        
+        const namevalidate = this.validateAdminName(usernameLoginError)
+        const passwordvalidate = this.validateAdminPassword(passwordLoginError)
+        
+        if(namevalidate  || passwordvalidate ){
+            this.setState({
+                errorMsgAdmin:{
+                    ...this.state.errorMsgAdmin,
+                    adminName: namevalidate ,
+                    adminPassword: passwordvalidate
+                },
+            })
+            return false
+        }
+        return true
+        
+        
+    }
     
     setFail= () =>{
         this.setState({
@@ -675,10 +718,6 @@ class Index extends React.Component {
     
     registerPosts = async () =>{
         const {registerAccount} = this.state
-        // this.setState({
-        //     loading: true
-        // })
-      
         await axios
         
         .post("http://localhost:3001/users", registerAccount)
@@ -857,6 +896,112 @@ class Index extends React.Component {
     }
 
     
+    deleteAllProduct = () =>{
+        this.setState({
+            
+            amount_product_add: []
+        })
+        this.saveToLocalStorage()
+    }
+
+
+    // admin
+
+    AdminName= (e) =>{
+        this.setState({
+            loginAdmin: {
+                ...this.state.loginAdmin,
+                adminName: e.target.value
+            }
+        })
+    }
+    AdminPassword= (e) =>{
+        this.setState({
+            loginAdmin: {
+                ...this.state.loginAdmin,
+                adminPassword: e.target.value
+            }
+        })
+    }
+
+    btnAdmin = async ()=>{
+
+        const validate = this.validateAdmin()
+        if(!validate){
+            if(validate !== true){
+                this.setFail()
+                
+            }
+        }
+        if(validate ){
+            if(validate === true){
+                this.setState({
+                    errorMsgAdmin:{
+                        ...this.state.errorMsgAdmin,
+                        adminName: "" ,
+                        adminPassword: ""
+                    },
+                },()=>{
+                    this.adminPosts()
+                })
+                
+            }
+            
+        } 
+    }
+
+    adminPosts = async () =>{
+        const {loginAdmin} = this.state
+       
+        await axios
+        .post("http://localhost:3001/admin/getadmin", loginAdmin)
+        .catch((res) =>{
+            console.log( res.response);
+            if(res.response){
+                if(res.response.data.name){
+                    this.setState({
+                        errorMsgAdmin:{
+                            ...this.state.errorMsgAdmin,
+                            adminName: res.response.data.Msg ,
+                            adminPassword: res.response.data.Msg
+                        },
+                    },()=>{
+                        this.setFail()
+                    })
+                    return false
+                }   
+                if(res.response.data.password){
+                    this.setState({
+                        errorMsgAdmin:{
+                            ...this.state.errorMsgAdmin,
+                            adminName: res.response.data.Msg ,
+                            adminPassword: res.response.data.Msg
+                        },
+                    },()=>{
+                        this.setFail()
+                    })
+                    return false
+                }   
+            }
+        })
+        .then((res)=>{
+            console.log(res)
+            // console.log(res.status)
+            // if(res.status === 200){
+            //     this.setSuccess()
+            //     this.setState({
+            //         isLogin: true,
+            //         amount_product_add: res.data.usercard
+            //     })
+            //     // console.log(res.data)
+            //     sessionStorage.setItem('username',res.data.userName );
+            //     sessionStorage.setItem('id',res.data.userId );
+            //     sessionStorage.setItem('card',JSON.stringify(res.data.usercard));
+            // }
+            
+        })
+    }
+
     // constraint
     isEmail(emailConstraint) {
         return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(emailConstraint);
@@ -866,7 +1011,7 @@ class Index extends React.Component {
         
         //   state
         
-        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin } = this.state
+        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin, errorMsgAdmin } = this.state
         const filterData = productsList
             .filter((product) =>
                 product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
@@ -1271,7 +1416,15 @@ class Index extends React.Component {
                                 btnLogout = {this.isLogout}
                             />
                         </Route>
-                        
+                        <Route path="/admin" >
+                            <ScrollToTop/>
+                            <AdminPage 
+                                AdminName={this.AdminName}
+                                AdminPassword={this.AdminPassword}
+                                btnAdmin={this.btnAdmin}
+                                errorMsgAdmin={errorMsgAdmin}
+                            />
+                        </Route>
                     </Switch>
                     {/* main */}
                     <footer>

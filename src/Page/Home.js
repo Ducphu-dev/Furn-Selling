@@ -65,7 +65,7 @@ function HomePage(props) {
                                 <img src="https://htmldemo.hasthemes.com/furns/furns/assets/images/slider-image/slider-2-2.jpg" alt="Chicago"></img>
                                 <div className="introduce-center">
                                     <h4 className="font-weight-bold">New Product</h4>
-                                    <h1 className="font-weight-bold products-name">Flexible Sofa Set</h1>
+                                    <h1 className="font-weight-bold products-name">Wooden Chair Set</h1>
                                     <p className="title">Torem ipsum dolor sit amet, consectetur adipisicing elitsed do <br /> eiusmo tempor incididunt ut labore et dolore magna</p>
                                     <Link to="/shop">Shop now</Link>
                                 </div>
