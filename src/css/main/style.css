@@ -1174,7 +1174,7 @@ input {
     }
 }
 
-.btn {
+/* .btn {
     padding: 0;
     font-size: 16px;
     border-radius: 0;
@@ -1186,7 +1186,7 @@ input {
     line-height: 50px;
     -webkit-transition: all .3s ease 0s;
     transition: all .3s ease 0s
-}
+} */
 
 .btn-primary {
     color: #fff;

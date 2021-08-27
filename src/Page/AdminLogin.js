@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 
 function AdminPage(props) {
     // funtion
-    const {  errorMsgAdmin,AdminName,AdminPassword , btnAdmin} = props
-
+    const {  errorMsgAdmin,AdminName,AdminPassword , btnAdmin, isAdminLogin} = props
+    
   
     return (
         <div className="login-page admin">
@@ -34,7 +34,7 @@ function AdminPage(props) {
                                 <span >{errorMsgAdmin.adminPassword}</span>
                             </div>
                            
-                            <input className="btn btn-primary btn-hover-dark mt-4 rounded-0" type="submit" value="Login" onClick={btnAdmin}/>
+                            <a className="btn btn-primary btn-hover-dark mt-4 rounded-0"  onClick={btnAdmin}>Login</a>
                         </div>
                     </div>
                 </div>

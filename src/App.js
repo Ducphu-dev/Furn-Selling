@@ -45,7 +45,8 @@ import {
     Route,
     Link,
     useRouteMatch,
-    useParams
+    useParams,
+    withRouter
 } from "react-router-dom";
 
 import React, {useState, useEffect} from 'react';
@@ -54,6 +55,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as productAction from '../src/actions/productAction'
 import ScrollToTop from './component/ScrollToTop';
+import history from './Page/history';
 
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -164,6 +166,7 @@ class Index extends React.Component {
                 adminName:"",
                 adminPassword:"",
             },
+            isAdminLogin: false,
         }
     }
 
@@ -175,7 +178,7 @@ class Index extends React.Component {
         const loggedInUser = JSON.parse(sessionStorage.getItem("card"));
         if (loggedInUser) {
             // const foundUser = JSON.parse(loggedInUser);
-            console.log(loggedInUser)
+            
             this.setState({
                 isLogin: true,
                 amount_product_add: loggedInUser
@@ -237,8 +240,6 @@ class Index extends React.Component {
     }
 
     
- 
-
 
     search = (e) => {
         this.setState({
@@ -309,7 +310,6 @@ class Index extends React.Component {
 
     saveToLocalStorage = async () => {
         const id = sessionStorage.getItem('id');
-        console.log(id)
         
         const add = await this.setState({
             addToCard:{
@@ -317,7 +317,6 @@ class Index extends React.Component {
                 userCard: this.state.amount_product_add
             }
         })
-        console.log(this.state.addToCard)
         axios
             .patch(`http://localhost:3001/users/${id}`, this.state.addToCard)
             .then(res => {
@@ -756,13 +755,11 @@ class Index extends React.Component {
     }
 
     loginPosts = async () =>{
-        console.log()
         const {loginAccount} = this.state
        
         await axios
         .post("http://localhost:3001/users/getuser", loginAccount)
         .catch((res) =>{
-            console.log( res.response);
             if(res.response){
                 if(res.response.data.name){
                     this.setState({
@@ -812,7 +809,6 @@ class Index extends React.Component {
         const {registerAccount} = this.state
         const isTrue = true
         const validate  = this.validateReg()
-        console.log(validate)
         
         if(!validate){
             if(validate !== isTrue){
@@ -860,6 +856,7 @@ class Index extends React.Component {
 
     btnLogin = async () =>{
         const validate = this.validateLogin()
+        // history.push("/shop")
         if(!validate){
             if(validate !== true){
                 this.setFail()
@@ -877,6 +874,7 @@ class Index extends React.Component {
                 },()=>{
                     
                     this.loginPosts()
+                    
                 })
                 
             }
@@ -943,6 +941,7 @@ class Index extends React.Component {
                     },
                 },()=>{
                     this.adminPosts()
+                    
                 })
                 
             }
@@ -956,7 +955,6 @@ class Index extends React.Component {
         await axios
         .post("http://localhost:3001/admin/getadmin", loginAdmin)
         .catch((res) =>{
-            console.log( res.response);
             if(res.response){
                 if(res.response.data.name){
                     this.setState({
@@ -985,22 +983,21 @@ class Index extends React.Component {
             }
         })
         .then((res)=>{
-            console.log(res)
-            // console.log(res.status)
-            // if(res.status === 200){
-            //     this.setSuccess()
-            //     this.setState({
-            //         isLogin: true,
-            //         amount_product_add: res.data.usercard
-            //     })
-            //     // console.log(res.data)
-            //     sessionStorage.setItem('username',res.data.userName );
-            //     sessionStorage.setItem('id',res.data.userId );
-            //     sessionStorage.setItem('card',JSON.stringify(res.data.usercard));
-            // }
+            if(res.status === 200){
+                this.setSuccess()
+                this.setState({
+                    isAdminLogin:true
+                })
+                
+                // console.log(res.data)
+                sessionStorage.setItem('adminUser',res.data.adminName );
+                sessionStorage.setItem('adminId',res.data.adminId );
+                sessionStorage.setItem('adminArray',JSON.stringify(res.data.adminArray));
+            }
             
         })
     }
+
 
     // constraint
     isEmail(emailConstraint) {
@@ -1011,7 +1008,7 @@ class Index extends React.Component {
         
         //   state
         
-        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin, errorMsgAdmin } = this.state
+        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin, errorMsgAdmin, isAdminLogin } = this.state
         const filterData = productsList
             .filter((product) =>
                 product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
@@ -1423,6 +1420,7 @@ class Index extends React.Component {
                                 AdminPassword={this.AdminPassword}
                                 btnAdmin={this.btnAdmin}
                                 errorMsgAdmin={errorMsgAdmin}
+                                isAdminLogin={isAdminLogin}
                             />
                         </Route>
                     </Switch>
@@ -1473,19 +1471,5 @@ class Index extends React.Component {
 
 }
 
-export default Index;
+export default withRouter(Index);
 
-// const mapStateToProps = state => {
-//     return {
-//         query: state.query,
-//         filterData: state.filterData
-//     }
-// }
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         ...bindActionCreators(productAction, dispatch)
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Index);

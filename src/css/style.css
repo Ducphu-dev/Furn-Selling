@@ -14,3 +14,59 @@
   textarea:focus, input:focus{
     outline: none;
 }
+.pro-pagination-style li {
+  display: inline-block
+}
+
+.pro-pagination-style a {
+  font-weight: 400;
+  color: #1d1d1d;
+  padding: 0;
+  height: 36px;
+  line-height: 36px;
+  background: #f6f6f6;
+  font-size: 14px;
+  display: inline-block;
+  width: 36px;
+  border-radius: 100%;
+  text-align: center;
+  vertical-align: top;
+  font-size: 14px
+}
+
+.pro-pagination-style a.active {
+  color: #fff;
+  background-color: #ff7004
+}
+
+.pro-pagination-style a:hover {
+  color: #fff;
+  background-color: #ff7004
+}
+
+.page-pagination li {
+    display: inline-block
+}
+
+.page-pagination li a {
+    font-weight: 500;
+    padding: 0 10px;
+    display: block;
+    text-align: center;
+    line-height: 41px;
+    min-width: 41px;
+    height: 41px;
+    text-transform: uppercase;
+    color: #ababab;
+    letter-spacing: 2px;
+    border-radius: 5px
+}
+
+.page-pagination li a.current {
+    background: #f6f5f9;
+    color: #ff7004
+}
+
+.page-pagination li a:hover {
+    color: #ff7004
+}
