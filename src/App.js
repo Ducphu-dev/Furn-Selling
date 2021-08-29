@@ -14,11 +14,15 @@ import Home_page from './Page/Home';
 import Cart_page from './Page/Cart';
 import Contact from './Page/Contact';
 import Aboutus from './Page/Aboutus';
+import ShowAll from './Page/ShowAll';
+import AddProduct from './Page/AddProduct';
 import Details_page from './Page/Details';
 import CheckOut_Page from './Page/CheckOut';
 import Success_Page from './Page/SuccessCheckOut';
 import Login_Page from './Page/Login';
 import Success from './component/Success';
+import confirmDelete from './component/confirmDelete';
+
 import AccountPage from './Page/Account';
 
 // data
@@ -60,6 +64,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
 import validator from 'validator';
+
 
 // const initialState = 
 
@@ -155,10 +160,22 @@ class Index extends React.Component {
             addToCard: {
                 userCard: []
             },
-            // accountLogined:{
-            //     username: "",
-            //     passwordLogin: ""
-            // },
+            chooseProduct:[],
+            confirmDelete:false,
+            add:{
+                product_img: "",
+                product_date: "",
+                product_sale: "",
+                product_name: "",
+                product_price: "",
+                product_description:"", 
+                prodcuct_weight: "",
+                product_dimension: "",
+                product_material: "",
+                product_infor:"",
+                product_amount:"",
+            },
+            detail:[],
         }
     }
 
@@ -754,6 +771,7 @@ class Index extends React.Component {
         .then((res)=>{
             // console.log(res.status)
             if(res.status === 200){
+                console.log(res.data)
                 this.setSuccess()
                 this.setState({
                     isLogin: true,
@@ -855,7 +873,142 @@ class Index extends React.Component {
         sessionStorage.clear();
         
     }
+    DeleteDB = async (productID) => {
+        let productArray = [...this.state.productsList];
+        this.setState({
+            chooseProduct: productArray.filter(product => product._id === productID),
+        },()=>{console.log(this.state.chooseProduct)})
+        // if(this.state.confirmDelete === false){
+            
+        // }else{
+            await axios
+                .delete(`http://localhost:3001/posts/${productID}`)
+                .then(res => {
+                   
+                })
+                .catch(error => { 
+                },()=>{
+                     console.log(this.state.productsList)
+                    // console.log(res)
+                    this.setState({
+                        
+                        productsList : this.state.productsList
+                        
+                    })
+                })
 
+        
+
+    }
+    product_img = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_img: e.target.value
+            }
+        })
+    }
+    product_date = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_date: e.target.value
+            }
+        })
+    }
+    product_sale = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_sale: e.target.value
+            }
+        })
+    }
+    product_name = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_name: e.target.value
+            }
+        })
+    }
+    product_price = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_price: e.target.value
+            }
+        })
+    }
+    product_description = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_description: e.target.value
+            }
+        })
+    }
+    prodcuct_weight = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                prodcuct_weight: e.target.value
+            }
+        })
+    }
+    product_dimension = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_dimension: e.target.value
+            }
+        })
+    }
+    product_material = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_material: e.target.value
+            }
+        })
+    }
+    product_infor = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_infor: e.target.value
+            }
+        })
+    }
+    product_amount = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_amount: e.target.value
+            }
+        })
+    }
+    productadd = async () => {
+        console.log(this.state.add)
+        await axios 
+        .post(`http://localhost:3001/posts` , this.state.add)
+                .then(res => {
+                    // console.log(res)
+                })
+                .catch(error => { 
+                })
+    }
+    viewDetail = (id) => {
+        let productDetails = [...this.state.productsList];
+        this.setState({
+            detail : productDetails.filter(product => product._id === id),
+        },()=>{console.log(this.state.detail)})
+    }
+    ConfigDB = () => {
+        console.log(this.state.add)
+    }
+
+    
     
     // constraint
     isEmail(emailConstraint) {
@@ -866,11 +1019,11 @@ class Index extends React.Component {
         
         //   state
         
-        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin } = this.state
+        const { productsList,detail, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin } = this.state
         const filterData = productsList
-            .filter((product) =>
-                product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
-            )
+            // .filter((product) =>
+            //     product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
+            // )
             .filter(product => {
                 switch (query.product_sort_price) {
                     default:
@@ -917,6 +1070,7 @@ class Index extends React.Component {
                         <div className="header-section">
                             <Success
                             isSuccess={isSuccess}/>
+                            <confirmDelete/>
                             {/* <!-- wellcome start --> */}
                             <div className="header-wellcome bg-dark">
                                 <div className="container d-flex align-items-center py-2">
@@ -1239,9 +1393,38 @@ class Index extends React.Component {
                             <ScrollToTop/>
                             <Contact/>
                         </Route>
+
+                        <Route path="/showall">
+                            <ScrollToTop/>
+                            <ShowAll
+                            productsList={productsList}
+                            viewDetail={this.viewDetail}
+                            DeleteDB={this.DeleteDB}
+                            />
+                        </Route>
+                        
                         <Route path="/aboutus">
                             <ScrollToTop/>
                             <Aboutus/>
+                        </Route>
+                        <Route path="/Addproduct">
+                            <ScrollToTop/>
+                            <AddProduct
+                            detail={detail}
+                            ConfigDB={this.ConfigDB}
+                            product_img={this.product_img}
+                            product_date={this.product_date}
+                            product_sale={this.product_sale}
+                            product_name={this.product_name}
+                            product_price={this.product_price}
+                            product_description={this.product_description}
+                            prodcuct_weight={this.prodcuct_weight}
+                            product_dimension={this.product_dimension}
+                            product_material={this.product_material}
+                            product_infor={this.product_infor}
+                            product_amount={this.product_amount}
+                            productadd={this.productadd}
+                            />
                         </Route>
                         <Route path="/success" >
                             <ScrollToTop/>
