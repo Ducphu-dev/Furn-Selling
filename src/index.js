@@ -5,17 +5,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux'
-import thunkMiddleWare from 'redux-thunk'
+import {  Router } from 'react-router-dom';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunkMiddleWare from 'redux-thunk';
+import history from './Page/history';
+
 import productReducer from '../src/reducers/productReducer'
 
 const middleareEnchancer = applyMiddleware(thunkMiddleWare)
 const compoEnchancers = compose(middleareEnchancer)
 const store = createStore(productReducer, undefined, compoEnchancers)
 
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={history}>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

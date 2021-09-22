@@ -15,8 +15,7 @@ function AddProduct(props){
         <div>
             {
             detail.length === 0 ?
-
-                        <div className="checkout-area pt-100px pb-100px">
+                    <div className="checkout-area pt-100px pb-100px">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -96,8 +95,7 @@ function AddProduct(props){
                                                     <input type="text" onChange={product_infor}/>
                                                 </div>
                                             </div>
-                                            <a onClick={productadd}>add</a>
-                                            
+                                            <a onClick={productadd} className="Submitbtn">Add</a>   
                                         </div>
                                     </div>
                                 </div>
@@ -109,13 +107,12 @@ function AddProduct(props){
                 
             detail.map((product)=>{
                 return(
-                    
                     <div className="checkout-area pt-100px pb-100px">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="addproduct-info-wrap">
-                                        <h3>Config Prouct</h3>
+                                        <h3>Update Prouct</h3>
                                         <div className="row">
                                         <div className="col-lg-12">
                                                 <div className="addproduct-info mb-20px">
@@ -189,7 +186,7 @@ function AddProduct(props){
                                                     <input type="text" onChange={product_infor} value={product.product_infor}/>
                                                 </div>
                                             </div>
-                                            <Link onClick={()=>ConfigDB()}>config</Link>
+                                            <Link onClick={()=>ConfigDB()} className="Submitbtn">Update</Link>
                                             
                                         </div>
                                     </div>

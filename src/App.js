@@ -1005,7 +1005,7 @@ class Index extends React.Component {
         },()=>{console.log(this.state.detail)})
     }
     ConfigDB = () => {
-        console.log(this.state.add)
+        console.log()
     }
 
     

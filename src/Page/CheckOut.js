@@ -90,15 +90,15 @@ function CheckOutPage(props) {
                                     <form >
                                         <div className="d-flex row">
                                             <div className="col-sm-12 col-lg-6 form-group">
-                                                <label for="firstname">First Name</label>
+                                                <label htmlFor="firstname">First Name</label>
                                                 <input type="text" onChange={formFirstName} className="form-control" id="firstname" />                                            </div>
                                             <div className="col-sm-12 col-lg-6 form-group">
-                                                <label for="lastname">Last Name</label>
+                                                <label htmlFor="lastname">Last Name</label>
                                                 <input type="text" onChange={formLastName} className="form-control" id="lastname"></input>
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <label for="company">Company Name</label>
+                                            <label htmlFor="company">Company Name</label>
                                             <select className="d-flex align-items-center" onChange={formCompanyName} id="company">
                                                 {
                                                     companyName.map((optionPrice, index) => (
@@ -108,30 +108,30 @@ function CheckOutPage(props) {
                                             </select>
                                         </div>
                                         <div className=" form-group">
-                                            <label for="country">Country</label>
+                                            <label htmlFor="country">Country</label>
                                             <input type="text" onChange={formCountryName} className="form-control" id="country"></input>
                                         </div>
                                         <div className=" form-group">
-                                            <label for="address">Street Address</label>
+                                            <label htmlFor="address">Street Address</label>
                                             <input type="text" className="form-control" onChange={formAddress} placeholder="House number and street name" id="address"></input>
                                             <input type="text" className="form-control" onChange={formApartment} placeholder="Apartment, suite, unit etc." id="apartment"></input>
                                         </div>
                                         <div className=" form-group">
-                                            <label for="city">Town / City</label>
+                                            <label htmlFor="city">Town / City</label>
                                             <input type="text" onChange={formCity} className="form-control" id="city"></input>
                                         </div>
                                         <div className="d-flex row">
                                             <div className="col-sm-12 col-lg-6 form-group">
-                                                <label for="state">State / County</label>
+                                                <label htmlFor="state">State / County</label>
                                                 <input type="text" onChange={formState} className="form-control" id="state"></input>
                                             </div>
                                             <div className="col-sm-12 col-lg-6 form-group">
-                                                <label for="phone">Phone</label>
+                                                <label htmlFor="phone">Phone</label>
                                                 <input type="tel" className="form-control" onChange={formPhone} id="phone" name="phone" pattern="[0]{1}[0-9]{1}[0-9]{8}" required></input>
                                             </div>
                                         </div>
                                         <div className=" form-group">
-                                            <label for="email">Email Address</label>
+                                            <label htmlFor="email">Email Address</label>
                                             <input type="email" onChange={formEmail} className="form-control" id="email"></input>
                                         </div>
                                     </form>

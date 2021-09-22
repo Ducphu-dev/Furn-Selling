@@ -18,6 +18,8 @@ import { Link } from 'react-router-dom';
 function CartPage(props) {
     //   state
     const { amount, product, amount_product_add } = props
+    const amout = amount_product_add.length
+    console.log(amout)
     // function
     const { deleteProduct, addProduct, miunusProduct, viewProduct, deleteAllProduct } = props
 
@@ -102,8 +104,9 @@ function CartPage(props) {
                                             }
                                         </p>
                                     </div>
-
-                                    <Link to="/checkout" className="cart__btn btn px-5 py-3" role="button">PROCEED TO CHECKOUT</Link>
+                                    {
+                                        amount === 0 ? <Link to="/checkout" className="cart__btn btn px-5 py-3" role="button">PROCEED TO CHECKOUT</Link> : <a className="cart__btn btn px-5 py-3" role="button">PROCEED TO CHECKOUT</a>
+                                    }
                                 </div>
                             </div>
                         </div>

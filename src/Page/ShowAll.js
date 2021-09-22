@@ -26,7 +26,10 @@ function ShowAll (props){
         <div className="addproduct-main-area pt-100px pb-100px">
             <confirmDelete/>
             <div className="container">
-                <h3 className="addproduct-page-title">Our Product</h3>
+                <div class="row showall-title">
+                    <h3 className="addproduct-page-title">Our Product</h3>
+                    <Link to='/addproduct' className="add ">Add Product</Link>
+                </div>
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                         <form action="#">

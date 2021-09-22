@@ -982,6 +982,10 @@ to {opacity: 1;}
 .login-page .login-form .form .form-register.active{
   display: flex;
 }
+
+.admin .login-form .login-tabs .list-login-tabs li:first-child:before{
+   display: none;
+  }
 /* aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
 .pt-100px {
 padding-top: 100px;
@@ -1170,7 +1174,7 @@ input {
     }
 }
 
-.btn {
+/* .btn {
     padding: 0;
     font-size: 16px;
     border-radius: 0;
@@ -1182,7 +1186,7 @@ input {
     line-height: 50px;
     -webkit-transition: all .3s ease 0s;
     transition: all .3s ease 0s
-}
+} */
 
 .btn-primary {
     color: #fff;
@@ -1346,6 +1350,18 @@ input {
   text-align: left;
   font-size: 24px;
   line-height: 16px;
+  font-style: normal;
+  text-transform: none;
+  margin: 0 0 30px;
+  padding: 20px;
+  font-weight: 600
+}
+.addproduct-main-area .add{
+  background-color: #ff7004;
+  padding: 20px;
+  color: white;
+  text-align: left;
+  font-size: 24px;
   font-style: normal;
   text-transform: none;
   margin: 0 0 30px;
@@ -1620,4 +1636,17 @@ input {
 .img-responsive {
   max-width: 100%;
   display: block;
+}
+.showall-title{
+  display: flex;
+  justify-content: space-between;
+}
+.addproduct-info-wrap .Submitbtn{
+  padding: 20px 50px;
+  color: white;
+  text-align: end;
+  background-color: rgb(226, 107, 10);
+  cursor: pointer;
+  margin-left: 15px;
+  margin-top: 20px;
 }
