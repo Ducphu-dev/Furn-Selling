@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 function AdminPage(props) {
     // funtion
     const {  errorMsgAdmin,AdminName,AdminPassword , btnAdmin, isAdminLogin} = props
-    
-  
+    const islogin = sessionStorage.getItem('admin')
+    console.log(isAdminLogin)
     return (
         <div className="login-page admin">
             <div className="container">
@@ -35,6 +35,7 @@ function AdminPage(props) {
                             </div>
                            
                             <a className="btn btn-primary btn-hover-dark mt-4 rounded-0"  onClick={btnAdmin}>Login</a>
+                            <Link to='/showall' className="btn btn-primary btn-hover-dark mt-4 rounded-0" style={{display: isAdminLogin === true ? "block" : "none" }} >Storage</Link>
                         </div>
                     </div>
                 </div>

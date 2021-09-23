@@ -21,9 +21,9 @@ import Details_page from './Page/Details';
 import CheckOut_Page from './Page/CheckOut';
 import Success_Page from './Page/SuccessCheckOut';
 import Login_Page from './Page/Login';
-import Success from './component/Success';
 import AdminPage from './Page/AdminLogin';
-import confirmDelete from './component/confirmDelete';
+import Success from './component/Success';
+// import confirmDelete from './component/confirmDelete';
 
 import AccountPage from './Page/Account';
 
@@ -52,7 +52,6 @@ import {
     useParams,
     withRouter,
     useRouteMatch,
-    useParams
 } from "react-router-dom";
 
 import React, {useState, useEffect} from 'react';
@@ -165,7 +164,7 @@ class Index extends React.Component {
                 userCard: []
             },
             chooseProduct:[],
-            confirmDelete:false,
+            // confirmDelete:false,
             add:{
                 product_img: "",
                 product_date: "",
@@ -180,6 +179,16 @@ class Index extends React.Component {
                 product_amount:"",
             },
             detail:[],
+            loginAdmin:{
+                adminName: "",
+                adminPassword: ""
+            },
+            errorMsgAdmin:{
+                adminName:"",
+                adminPassword:"",
+            },
+            isAdminLogin: false,
+
         }
     }
 
@@ -618,6 +627,8 @@ class Index extends React.Component {
         }
     }
 
+    
+
  
 
     validateReg = () =>{
@@ -929,10 +940,12 @@ class Index extends React.Component {
         })
     }
     product_name = (e) => {
+      
         this.setState({
             add:{
                 ...this.state.add,
                 product_name: e.target.value
+               
             }
         })
     }
@@ -985,6 +998,7 @@ class Index extends React.Component {
         })
     }
     product_amount = (e) => {
+        
         this.setState({
             add:{
                 ...this.state.add,
@@ -993,7 +1007,6 @@ class Index extends React.Component {
         })
     }
     productadd = async () => {
-        console.log(this.state.add)
         await axios 
         .post(`http://localhost:3001/posts` , this.state.add)
                 .then(res => {
@@ -1008,9 +1021,156 @@ class Index extends React.Component {
             detail : productDetails.filter(product => product._id === id),
         },()=>{console.log(this.state.detail)})
     }
-    ConfigDB = () => {
-        console.log()
+    ConfigDB = async (id) => {
+        console.log(id)
+        await axios 
+        .patch(`http://localhost:3001/posts/${id}` , this.state.add)
+        .then(res => {
+            // console.log(res)
+        })
+        .catch(error => { 
+        })
     }
+
+    clearUpdate  = () => {
+        this.setState({
+            detail : [],
+        },()=>{console.log(this.state.detail)})
+    }
+
+    AdminName= (e) =>{
+        this.setState({
+            loginAdmin: {
+                ...this.state.loginAdmin,
+                adminName: e.target.value
+            }
+        })
+    }
+    AdminPassword= (e) =>{
+        this.setState({
+            loginAdmin: {
+                ...this.state.loginAdmin,
+                adminPassword: e.target.value
+            }
+        })
+    }
+
+    validateNameAdmin = (nameError) => {
+        if(!this.state.loginAdmin.adminName){
+            return nameError = "User name can not be blank!"
+            
+        }
+    }
+
+    validatePasswordAdmin = (passwordError) => {
+        if(!this.state.loginAdmin.adminPassword){
+            return passwordError = "Password can not be blank!"
+            
+        }
+    }
+
+    validateAdmin = () =>{
+        let usernameLoginError = "";
+        let passwordLoginError = "";
+        
+        const namevalidate = this.validateNameAdmin(usernameLoginError)
+        const passwordvalidate = this.validatePasswordAdmin(passwordLoginError)
+        
+        if(namevalidate  || passwordvalidate ){
+            this.setState({
+                errorMsgAdmin:{
+                    ...this.state.errorMsgAdmin,
+                    adminName: namevalidate ,
+                    adminPassword: passwordvalidate
+                },
+            })
+            return false
+        }
+        return true
+        
+        
+    }
+    
+
+    btnAdmin = async ()=>{
+
+        const validate = this.validateAdmin()
+        console.log(validate)
+        if(!validate){
+            if(validate !== true){
+                this.setFail()
+                
+            }
+        }
+        if(validate ){
+            if(validate === true){
+                this.setState({
+                    errorMsgAdmin:{
+                        ...this.state.errorMsgAdmin,
+                        adminName: "" ,
+                        adminPassword: ""
+                    },
+                },()=>{
+                    this.adminPosts()
+                    
+                })
+                
+            }
+            
+        } 
+    }
+
+    adminPosts = async () =>{
+        const {loginAdmin} = this.state
+       console.log(loginAdmin)
+        await axios
+        .post("http://localhost:3001/admin/getadmin", loginAdmin)
+        .catch((res) =>{
+            if(res.response){
+                if(res.response.data.name){
+                    this.setState({
+                        errorMsgAdmin:{
+                            ...this.state.errorMsgAdmin,
+                            adminName: res.response.data.Msg ,
+                            adminPassword: res.response.data.Msg
+                        },
+                    },()=>{
+                        this.setFail()
+                    })
+                    return false
+                }   
+                if(res.response.data.password){
+                    this.setState({
+                        errorMsgAdmin:{
+                            ...this.state.errorMsgAdmin,
+                            adminName: res.response.data.Msg ,
+                            adminPassword: res.response.data.Msg
+                        },
+                    },()=>{
+                        this.setFail()
+                    })
+                    return false
+                }   
+            }
+        })
+        .then((res)=>{
+            if(res.status === 200){
+                this.setSuccess()
+                this.setState({
+                    isAdminLogin:true
+                })
+                
+                // console.log(res.data)
+                sessionStorage.setItem('adminUser',res.data.adminName );
+                sessionStorage.setItem('adminId',res.data.adminId );
+                sessionStorage.setItem('adminArray',JSON.stringify(res.data.adminArray));
+                sessionStorage.setItem('admin',true);
+            }
+            
+        })
+    }
+
+
 
     
     
@@ -1024,6 +1184,7 @@ class Index extends React.Component {
         //   state
         
         const { productsList,detail, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin } = this.state
+        const { errorMsgAdmin ,isAdminLogin } = this.state
         const filterData = productsList
             // .filter((product) =>
             //     product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
@@ -1404,14 +1565,12 @@ class Index extends React.Component {
                             productsList={productsList}
                             viewDetail={this.viewDetail}
                             DeleteDB={this.DeleteDB}
+                            clearUpdate={this.clearUpdate}
+                            isAdminLogin={isAdminLogin}
+                            add={this.state.add}
                             />
                         </Route>
-                        <Route path="/adminlogin">
-                            <ScrollToTop/>
-                            <AdminLogin
-
-                            />
-                        </Route>
+                       
                         <Route path="/order">
                             <ScrollToTop/>
                             <Order
@@ -1441,6 +1600,7 @@ class Index extends React.Component {
                             product_infor={this.product_infor}
                             product_amount={this.product_amount}
                             productadd={this.productadd}
+                            add={this.state.add}
                             />
                         </Route>
                         <Route path="/success" >
@@ -1472,6 +1632,17 @@ class Index extends React.Component {
                             />
                         </Route>
                         
+                        <Route path="/admin" >
+                            <ScrollToTop/>
+                            <AdminPage 
+                                AdminName={this.AdminName}
+                                AdminPassword={this.AdminPassword}
+                                btnAdmin={this.btnAdmin}
+                                errorMsgAdmin={errorMsgAdmin}
+                                isAdminLogin={isAdminLogin}
+                            />
+                        </Route>
+                        
                     </Switch>
                     {/* main */}
                     <footer>
@@ -1496,9 +1667,10 @@ class Index extends React.Component {
                                     <ul className="footer__list">
                                         <li className="list-items my-2"><a className="" href="">My Account</a></li>
                                         <li className="list-items my-2"><a className="" href="">My Art</a></li>
-                                        <li className="list-items my-2"><a className="" href="">Login</a></li>
+                                        <li className="list-items my-2"><Link to='/admin' className="" href="">Login Admin</Link></li>
                                         <li className="list-items my-2"><a className="" href="">Wishlist</a></li>
                                         <li className="list-items my-2"><a className="" href="">Checkout</a></li>
+                                        
                                     </ul>
                                 </div>
                                 <div className="footer-news col-6 col-lg-3">

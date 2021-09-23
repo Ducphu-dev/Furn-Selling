@@ -8,7 +8,7 @@ function Cart(props) {
     // function
     const { deleteProduct, addProduct, miunusProduct, viewProduct } = props
     return (
-        <div key={product._id}>
+        <div key={product._id} className="addproduct__lists">
             <div  className="items__products row text-center border border-top-0 align-items-center py-4">
                 <div className="col-2 col-img " >
                     <div className="shop-item d-flex " >
@@ -47,8 +47,8 @@ function Cart(props) {
                 </div>
             </div>
             {/* mobile */}
-            <div className="cart__lists-mobile ">
-                <div className="shop-item border d-flex p-2" key={product._id}>
+            <div className="cart__lists-mobile addproduct__lists-mobile">
+                <div className="shop-item   border d-flex p-2" key={product._id}>
                     <img className="side-product__img" src={product.product_img} alt="Card image"></img>
                     <div className="side-product__title  ">
                         <Link to="/detail" onClick={() => viewProduct(product._id)} className="title">{product.product_name}</Link>

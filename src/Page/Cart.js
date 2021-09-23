@@ -17,9 +17,9 @@ import { Link } from 'react-router-dom';
 
 function CartPage(props) {
     //   state
-    const { amount, product, amount_product_add } = props
-    const amout = amount_product_add.length
-    console.log(amout)
+    const {  product, amount_product_add } = props
+    const amount = amount_product_add.length
+    console.log(amount)
     // function
     const { deleteProduct, addProduct, miunusProduct, viewProduct, deleteAllProduct } = props
 
@@ -59,7 +59,7 @@ function CartPage(props) {
                                 </h1>
                             </div>
                         </div>
-                        <div className="cart__lists">
+                        <div className="cart__lists addproduct__lists">
                             <div className="row items__title py-4 text-center">
                                 <div className="col" >IMAGE</div>
                                 <div className="col" >PRODUCT NAME</div>
@@ -86,26 +86,27 @@ function CartPage(props) {
                             }
                         </div>
 
-                        <div className="cart__active d-flex py-4">
+                        <div className="cart__active d-flex addproduct__active py-4">
                             <a href="#" className="cart__btn-continuos btn btn-light px-5 py-3 " role="button">Continues shopping</a>
-                            <a href="#" className="cart__btn btn px-5 py-3 ml-auto" onClick={deleteAllProduct} role="button">Clear Shopping cart</a>
+                            <a href="#" className="cart__btn  addproduct__btn btn px-5 py-3 ml-auto" onClick={deleteAllProduct} role="button">Clear Shopping cart</a>
                         </div>
-                        <div className="cart__pay py-4">
+                        <div className="cart__pay addproduct__pay py-4">
                             <div className="proceed card border-0 ml-auto text-center" >
                                 <div className="card-body">
                                     <h4 className="proceed__title card-title">Cart Total</h4>
                                     <div className="proceed__total d-flex py-4">
                                         <p className="card-text mr-auto">Total products:</p>
                                         <p className="total card-text">
-                                            {
+                                            {`$${
                                                 amount_product_add.reduce((total, product) =>
                                                     Math.ceil(total = total + ((product.product_price - Math.ceil((product.product_price * (product.product_sale / 100)))) * product.product_amount)), 0
                                                 )
+                                            }`
                                             }
                                         </p>
                                     </div>
                                     {
-                                        amount === 0 ? <Link to="/checkout" className="cart__btn btn px-5 py-3" role="button">PROCEED TO CHECKOUT</Link> : <a className="cart__btn btn px-5 py-3" role="button">PROCEED TO CHECKOUT</a>
+                                        amount === 0 ? <a className="cart__btn addproduct__btn btn px-5 py-3" role="button">PROCEED TO CHECKOUT</a> :<Link to="/checkout" className="cart__btn addproduct__btn btn px-5 py-3" role="button">PROCEED TO CHECKOUT</Link>
                                     }
                                 </div>
                             </div>
