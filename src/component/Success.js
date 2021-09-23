@@ -19,7 +19,7 @@ function Success(props) {
             return "Success fail annimationFail"
         }
     }
-
+    
     const content = () =>{
         // console.log(isSuccess)
         if(isSuccess === true){

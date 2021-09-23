@@ -15,12 +15,14 @@ import Cart_page from './Page/Cart';
 import Contact from './Page/Contact';
 import Aboutus from './Page/Aboutus';
 import ShowAll from './Page/ShowAll';
+import Order from './Page/Order';
 import AddProduct from './Page/AddProduct';
 import Details_page from './Page/Details';
 import CheckOut_Page from './Page/CheckOut';
 import Success_Page from './Page/SuccessCheckOut';
 import Login_Page from './Page/Login';
 import Success from './component/Success';
+import AdminPage from './Page/AdminLogin';
 import confirmDelete from './component/confirmDelete';
 
 import AccountPage from './Page/Account';
@@ -47,6 +49,8 @@ import {
     Switch,
     Route,
     Link,
+    useParams,
+    withRouter,
     useRouteMatch,
     useParams
 } from "react-router-dom";
@@ -1402,7 +1406,20 @@ class Index extends React.Component {
                             DeleteDB={this.DeleteDB}
                             />
                         </Route>
-                        
+                        <Route path="/adminlogin">
+                            <ScrollToTop/>
+                            <AdminLogin
+
+                            />
+                        </Route>
+                        <Route path="/order">
+                            <ScrollToTop/>
+                            <Order
+                            productsList={productsList}
+                            viewDetail={this.viewDetail}
+                            DeleteDB={this.DeleteDB}
+                            />
+                        </Route>
                         <Route path="/aboutus">
                             <ScrollToTop/>
                             <Aboutus/>

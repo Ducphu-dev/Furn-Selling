@@ -1650,3 +1650,174 @@ input {
   margin-left: 15px;
   margin-top: 20px;
 }
+/* .order-main-area .order-page-title {
+  color: #212121;
+  text-align: left;
+  font-size: 24px;
+  line-height: 16px;
+  font-style: normal;
+  text-transform: none;
+  margin: 0 0 30px;
+  padding: 20px;
+  font-weight: 600
+}
+.order-main-area .add{
+  background-color: #ff7004;
+  padding: 20px;
+  color: white;
+  text-align: left;
+  font-size: 24px;
+  font-style: normal;
+  text-transform: none;
+  margin: 0 0 30px;
+  font-weight: 600
+}
+
+.order-main-area .table-content table {
+  border: 1px solid #ebebeb;
+  width: 100%
+}
+.order-main-area .table-content table .status {
+  display: flex;
+  flex-direction: row;
+  
+}
+.order-main-area .table-content table .status p {
+  border-top: medium none;
+  color: #212121;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 21px 45px 22px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap
+}
+.order-main-area .table-content table thead>tr {
+
+  border: 1px solid #ebebeb
+}
+
+.order-main-area .table-content table thead>tr>th {
+  border-top: medium none;
+  color: #212121;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 21px 45px 22px;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap
+}
+
+.order-main-area .table-content table tbody>tr {
+  border-bottom: 1px solid #ebebeb
+}
+
+.order-main-area .table-content table tbody>tr td {
+  color: #474747;
+  font-size: 15px;
+  padding: 30px 0;
+  text-align: start,
+}
+
+.order-main-area .table-content table tbody>tr td.order-img {
+  width: 15%
+}
+
+.order-main-area .table-content table tbody>tr td.order-name {
+  width: 60%;
+  padding:0 20px
+}
+
+.order-main-area .table-content table tbody>tr td.order-name a {
+  color: #474747;
+  font-size: 15px;
+  font-weight: 500
+}
+
+.order-main-area .table-content table tbody>tr td.order-price-addproduct {
+  width: 435px
+}
+
+.order-main-area .table-content table tbody>tr td.order-quantity {
+  width: 435px
+}
+
+.order-main-area .table-content table tbody>tr td.order-quantity .order-plus-minus {
+  display: inline-block;
+  height: 40px;
+  padding: 0;
+  position: relative;
+  width: 110px
+}
+
+.order-main-area .table-content table tbody>tr td.order-quantity .order-plus-minus .dec.qtybutton {
+  border-right: 1px solid #e5e5e5;
+  height: 40px;
+  left: 0;
+  padding-top: 8px;
+  top: 0
+}
+
+.order-main-area .table-content table tbody>tr td.order-quantity .order-plus-minus .inc.qtybutton {
+  border-left: 1px solid #e5e5e5;
+  height: 40px;
+  padding-top: 9px;
+  right: 0;
+  top: 0
+}
+
+.order-main-area .table-content table tbody>tr td.order-quantity .order-plus-minus .qtybutton {
+  color: #474747;
+  cursor: pointer;
+  float: inherit;
+  font-size: 16px;
+  margin: 0;
+  position: absolute;
+  -webkit-transition: all .3s ease 0s;
+  transition: all .3s ease 0s;
+  width: 20px;
+  text-align: center
+}
+
+.order-main-area .table-content table tbody>tr td.order-quantity .order-plus-minus input.order-plus-minus-box {
+  color: #474747;
+  float: left;
+  font-size: 14px;
+  height: 40px;
+  margin: 0;
+  width: 110px;
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #e1e1e1;
+  padding: 0;
+  text-align: center
+}
+
+.order-main-area .table-content table tbody>tr td.order-remove {
+  width: 100px
+}
+
+.order-main-area .table-content table tbody>tr td.order-remove a {
+  color: #474747;
+  font-size: 16px;
+  margin: 0 10px
+}
+
+.order-main-area .table-content table tbody>tr td.order-remove a:hover {
+  color: #ff7004
+}
+
+.order-main-area .table-content table tbody>tr td.order-wishlist-addproduct>a {
+  background-color: #ff7004;
+  border-radius: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 10px 12px;
+  text-transform: uppercase
+}
+
+.order-main-area .table-content table tbody>tr td.order-wishlist-addproduct>a:hover {
+  background-color: #212121
+} */
