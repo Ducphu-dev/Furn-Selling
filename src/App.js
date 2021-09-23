@@ -14,13 +14,17 @@ import Home_page from './Page/Home';
 import Cart_page from './Page/Cart';
 import Contact from './Page/Contact';
 import Aboutus from './Page/Aboutus';
+import ShowAll from './Page/ShowAll';
+import AddProduct from './Page/AddProduct';
 import Details_page from './Page/Details';
 import CheckOut_Page from './Page/CheckOut';
 import Success_Page from './Page/SuccessCheckOut';
 import Login_Page from './Page/Login';
-import Success from './component/Success';
-import AccountPage from './Page/Account';
 import AdminPage from './Page/AdminLogin';
+import Success from './component/Success';
+// import confirmDelete from './component/confirmDelete';
+
+import AccountPage from './Page/Account';
 
 // data
 import search from './img/search.png';
@@ -45,8 +49,7 @@ import {
     Route,
     Link,
     useRouteMatch,
-    useParams,
-    withRouter
+    useParams
 } from "react-router-dom";
 
 import React, {useState, useEffect} from 'react';
@@ -55,7 +58,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as productAction from '../src/actions/productAction'
 import ScrollToTop from './component/ScrollToTop';
-import history from './Page/history';
 
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -63,6 +65,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
 import validator from 'validator';
+
 
 // const initialState = 
 
@@ -158,6 +161,22 @@ class Index extends React.Component {
             addToCard: {
                 userCard: []
             },
+            chooseProduct:[],
+            // confirmDelete:false,
+            add:{
+                product_img: "",
+                product_date: "",
+                product_sale: "",
+                product_name: "",
+                product_price: "",
+                product_description:"", 
+                prodcuct_weight: "",
+                product_dimension: "",
+                product_material: "",
+                product_infor:"",
+                product_amount:"",
+            },
+            detail:[],
             loginAdmin:{
                 adminName: "",
                 adminPassword: ""
@@ -167,6 +186,7 @@ class Index extends React.Component {
                 adminPassword:"",
             },
             isAdminLogin: false,
+
         }
     }
 
@@ -178,7 +198,7 @@ class Index extends React.Component {
         const loggedInUser = JSON.parse(sessionStorage.getItem("card"));
         if (loggedInUser) {
             // const foundUser = JSON.parse(loggedInUser);
-            
+            console.log(loggedInUser)
             this.setState({
                 isLogin: true,
                 amount_product_add: loggedInUser
@@ -240,6 +260,8 @@ class Index extends React.Component {
     }
 
     
+ 
+
 
     search = (e) => {
         this.setState({
@@ -310,6 +332,7 @@ class Index extends React.Component {
 
     saveToLocalStorage = async () => {
         const id = sessionStorage.getItem('id');
+        console.log(id)
         
         const add = await this.setState({
             addToCard:{
@@ -317,6 +340,7 @@ class Index extends React.Component {
                 userCard: this.state.amount_product_add
             }
         })
+        console.log(this.state.addToCard)
         axios
             .patch(`http://localhost:3001/users/${id}`, this.state.addToCard)
             .then(res => {
@@ -563,9 +587,6 @@ class Index extends React.Component {
         })
     }
 
-
-    // validate
-        //  ------- Register --------- //
     validateName = (nameError) => {
         if(!this.state.registerAccount.usernameReg){
             return nameError = "User name can not be blank!"
@@ -589,8 +610,25 @@ class Index extends React.Component {
             return emailError = "Email is wrong!"
         }
     }
-       
-    // 
+
+    validateNameLogin = (nameError) => {
+        if(!this.state.loginAccount.usernameLogin){
+            return nameError = "User name can not be blank!"
+            
+        }
+    }
+
+    validatePasswordLogin = (passwordError) => {
+        if(!this.state.loginAccount.passwordLogin){
+            return passwordError = "Password can not be blank!"
+            
+        }
+    }
+
+    
+
+ 
+
     validateReg = () =>{
         let usernameRegError = "";
         let passwordRegError = "";
@@ -600,6 +638,8 @@ class Index extends React.Component {
         const passwordvalidate = this.validatePassword(passwordRegError)
         const emailvalidate = this.validateEmail(emailRegError)
 
+       
+        
         if(namevalidate  || passwordvalidate || emailvalidate ){
             this.setState({
                 errorMsg:{
@@ -615,21 +655,6 @@ class Index extends React.Component {
         return true
         
         
-    }
-
-     //  ------- Login --------- //
-     validateNameLogin = (nameError) => {
-        if(!this.state.loginAccount.usernameLogin){
-            return nameError = "User name can not be blank!"
-            
-        }
-    }
-
-    validatePasswordLogin = (passwordError) => {
-        if(!this.state.loginAccount.passwordLogin){
-            return passwordError = "Password can not be blank!"
-            
-        }
     }
 
     validateLogin = () =>{
@@ -654,43 +679,6 @@ class Index extends React.Component {
         
     }
     
-
-    //  ------- Admin --------- //
-    validateAdminName = (nameError) => {
-        if(!this.state.loginAdmin.adminName){
-            return nameError = "Admin name can not be blank!"
-            
-        }
-    }
-
-    validateAdminPassword = (passwordError) => {
-        if(!this.state.loginAdmin.adminPassword){
-            return passwordError = "Password can not be blank!"
-            
-        }
-    }
-
-    validateAdmin = () =>{
-        let usernameLoginError = "";
-        let passwordLoginError = "";
-        
-        const namevalidate = this.validateAdminName(usernameLoginError)
-        const passwordvalidate = this.validateAdminPassword(passwordLoginError)
-        
-        if(namevalidate  || passwordvalidate ){
-            this.setState({
-                errorMsgAdmin:{
-                    ...this.state.errorMsgAdmin,
-                    adminName: namevalidate ,
-                    adminPassword: passwordvalidate
-                },
-            })
-            return false
-        }
-        return true
-        
-        
-    }
     
     setFail= () =>{
         this.setState({
@@ -717,6 +705,10 @@ class Index extends React.Component {
     
     registerPosts = async () =>{
         const {registerAccount} = this.state
+        // this.setState({
+        //     loading: true
+        // })
+      
         await axios
         
         .post("http://localhost:3001/users", registerAccount)
@@ -755,11 +747,13 @@ class Index extends React.Component {
     }
 
     loginPosts = async () =>{
+        console.log()
         const {loginAccount} = this.state
        
         await axios
         .post("http://localhost:3001/users/getuser", loginAccount)
         .catch((res) =>{
+            console.log( res.response);
             if(res.response){
                 if(res.response.data.name){
                     this.setState({
@@ -790,6 +784,7 @@ class Index extends React.Component {
         .then((res)=>{
             // console.log(res.status)
             if(res.status === 200){
+                console.log(res.data)
                 this.setSuccess()
                 this.setState({
                     isLogin: true,
@@ -809,6 +804,7 @@ class Index extends React.Component {
         const {registerAccount} = this.state
         const isTrue = true
         const validate  = this.validateReg()
+        console.log(validate)
         
         if(!validate){
             if(validate !== isTrue){
@@ -856,7 +852,6 @@ class Index extends React.Component {
 
     btnLogin = async () =>{
         const validate = this.validateLogin()
-        // history.push("/shop")
         if(!validate){
             if(validate !== true){
                 this.setFail()
@@ -874,7 +869,6 @@ class Index extends React.Component {
                 },()=>{
                     
                     this.loginPosts()
-                    
                 })
                 
             }
@@ -892,18 +886,155 @@ class Index extends React.Component {
         sessionStorage.clear();
         
     }
-
-    
-    deleteAllProduct = () =>{
+    DeleteDB = async (productID) => {
+        let productArray = [...this.state.productsList];
         this.setState({
+            chooseProduct: productArray.filter(product => product._id === productID),
+        },()=>{console.log(this.state.chooseProduct)})
+        // if(this.state.confirmDelete === false){
             
-            amount_product_add: []
+        // }else{
+            await axios
+                .delete(`http://localhost:3001/posts/${productID}`)
+                .then(res => {
+                   
+                })
+                .catch(error => { 
+                },()=>{
+                     console.log(this.state.productsList)
+                    // console.log(res)
+                    this.setState({
+                        
+                        productsList : this.state.productsList
+                        
+                    })
+                })
+
+        
+
+    }
+    product_img = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_img: e.target.value
+            }
         })
-        this.saveToLocalStorage()
+    }
+    product_date = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_date: e.target.value
+            }
+        })
+    }
+    product_sale = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_sale: e.target.value
+            }
+        })
+    }
+    product_name = (e) => {
+      
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_name: e.target.value
+               
+            }
+        })
+    }
+    product_price = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_price: e.target.value
+            }
+        })
+    }
+    product_description = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_description: e.target.value
+            }
+        })
+    }
+    prodcuct_weight = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                prodcuct_weight: e.target.value
+            }
+        })
+    }
+    product_dimension = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_dimension: e.target.value
+            }
+        })
+    }
+    product_material = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_material: e.target.value
+            }
+        })
+    }
+    product_infor = (e) => {
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_infor: e.target.value
+            }
+        })
+    }
+    product_amount = (e) => {
+        
+        this.setState({
+            add:{
+                ...this.state.add,
+                product_amount: e.target.value
+            }
+        })
+    }
+    productadd = async () => {
+        await axios 
+        .post(`http://localhost:3001/posts` , this.state.add)
+                .then(res => {
+                    // console.log(res)
+                })
+                .catch(error => { 
+                })
+    }
+    viewDetail = (id) => {
+        let productDetails = [...this.state.productsList];
+        this.setState({
+            detail : productDetails.filter(product => product._id === id),
+        },()=>{console.log(this.state.detail)})
+    }
+    ConfigDB = async (id) => {
+        console.log(id)
+        await axios 
+        .patch(`http://localhost:3001/posts/${id}` , this.state.add)
+        .then(res => {
+            // console.log(res)
+        })
+        .catch(error => { 
+        })
     }
 
-
-    // admin
+    clearUpdate  = () => {
+        this.setState({
+            detail : [],
+        },()=>{console.log(this.state.detail)})
+    }
 
     AdminName= (e) =>{
         this.setState({
@@ -922,9 +1053,47 @@ class Index extends React.Component {
         })
     }
 
+    validateNameAdmin = (nameError) => {
+        if(!this.state.loginAdmin.adminName){
+            return nameError = "User name can not be blank!"
+            
+        }
+    }
+
+    validatePasswordAdmin = (passwordError) => {
+        if(!this.state.loginAdmin.adminPassword){
+            return passwordError = "Password can not be blank!"
+            
+        }
+    }
+
+    validateAdmin = () =>{
+        let usernameLoginError = "";
+        let passwordLoginError = "";
+        
+        const namevalidate = this.validateNameAdmin(usernameLoginError)
+        const passwordvalidate = this.validatePasswordAdmin(passwordLoginError)
+        
+        if(namevalidate  || passwordvalidate ){
+            this.setState({
+                errorMsgAdmin:{
+                    ...this.state.errorMsgAdmin,
+                    adminName: namevalidate ,
+                    adminPassword: passwordvalidate
+                },
+            })
+            return false
+        }
+        return true
+        
+        
+    }
+    
+
     btnAdmin = async ()=>{
 
         const validate = this.validateAdmin()
+        console.log(validate)
         if(!validate){
             if(validate !== true){
                 this.setFail()
@@ -951,7 +1120,7 @@ class Index extends React.Component {
 
     adminPosts = async () =>{
         const {loginAdmin} = this.state
-       
+       console.log(loginAdmin)
         await axios
         .post("http://localhost:3001/admin/getadmin", loginAdmin)
         .catch((res) =>{
@@ -993,12 +1162,16 @@ class Index extends React.Component {
                 sessionStorage.setItem('adminUser',res.data.adminName );
                 sessionStorage.setItem('adminId',res.data.adminId );
                 sessionStorage.setItem('adminArray',JSON.stringify(res.data.adminArray));
+                sessionStorage.setItem('admin',true);
             }
             
         })
     }
 
 
+
+    
+    
     // constraint
     isEmail(emailConstraint) {
         return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(emailConstraint);
@@ -1008,11 +1181,12 @@ class Index extends React.Component {
         
         //   state
         
-        const { productsList, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin, errorMsgAdmin, isAdminLogin } = this.state
+        const { productsList,detail, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin } = this.state
+        const {errorMsgAdmin ,isAdminLogin} = this.state
         const filterData = productsList
-            .filter((product) =>
-                product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
-            )
+            // .filter((product) =>
+            //     product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
+            // )
             .filter(product => {
                 switch (query.product_sort_price) {
                     default:
@@ -1059,6 +1233,7 @@ class Index extends React.Component {
                         <div className="header-section">
                             <Success
                             isSuccess={isSuccess}/>
+                            <confirmDelete/>
                             {/* <!-- wellcome start --> */}
                             <div className="header-wellcome bg-dark">
                                 <div className="container d-flex align-items-center py-2">
@@ -1381,9 +1556,41 @@ class Index extends React.Component {
                             <ScrollToTop/>
                             <Contact/>
                         </Route>
+
+                        <Route path="/showall">
+                            <ScrollToTop/>
+                            <ShowAll
+                            productsList={productsList}
+                            viewDetail={this.viewDetail}
+                            DeleteDB={this.DeleteDB}
+                            clearUpdate={this.clearUpdate}
+                            add={this.state.add}
+                            />
+                        </Route>
+                        
                         <Route path="/aboutus">
                             <ScrollToTop/>
                             <Aboutus/>
+                        </Route>
+                        <Route path="/Addproduct">
+                            <ScrollToTop/>
+                            <AddProduct
+                            detail={detail}
+                            ConfigDB={this.ConfigDB}
+                            product_img={this.product_img}
+                            product_date={this.product_date}
+                            product_sale={this.product_sale}
+                            product_name={this.product_name}
+                            product_price={this.product_price}
+                            product_description={this.product_description}
+                            prodcuct_weight={this.prodcuct_weight}
+                            product_dimension={this.product_dimension}
+                            product_material={this.product_material}
+                            product_infor={this.product_infor}
+                            product_amount={this.product_amount}
+                            productadd={this.productadd}
+                            add={this.state.add}
+                            />
                         </Route>
                         <Route path="/success" >
                             <ScrollToTop/>
@@ -1413,6 +1620,7 @@ class Index extends React.Component {
                                 btnLogout = {this.isLogout}
                             />
                         </Route>
+                        
                         <Route path="/admin" >
                             <ScrollToTop/>
                             <AdminPage 
@@ -1423,6 +1631,7 @@ class Index extends React.Component {
                                 isAdminLogin={isAdminLogin}
                             />
                         </Route>
+                        
                     </Switch>
                     {/* main */}
                     <footer>
@@ -1471,5 +1680,19 @@ class Index extends React.Component {
 
 }
 
-export default withRouter(Index);
+export default Index;
 
+// const mapStateToProps = state => {
+//     return {
+//         query: state.query,
+//         filterData: state.filterData
+//     }
+// }
+
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         ...bindActionCreators(productAction, dispatch)
+//     }
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Index);
