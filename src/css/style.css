@@ -70,3 +70,116 @@
 .page-pagination li a:hover {
     color: #ff7004
 }
+
+.team-section {
+  background-color: #f6f6f6;
+  padding-top: 95px;
+  padding-bottom: 75px
+}
+
+@media only screen and (min-width:992px) and (max-width:1199px) {
+  .team-section {
+      padding-top: 72px;
+      padding-bottom: 55px
+  }
+}
+
+@media only screen and (min-width:768px) and (max-width:991px) {
+  .team-section {
+      padding-top: 52px;
+      padding-bottom: 35px
+  }
+}
+
+@media only screen and (max-width:767px) {
+  .team-section {
+      padding-top: 45px;
+      padding-bottom: 25px
+  }
+}
+
+.team-single {
+  background: #fff;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 30px 45px 30px
+}
+
+.team-content {
+  position: relative;
+  font-size: 16px
+}
+
+.team-name {
+  font-weight: 700;
+  font-size: 16px
+}
+
+.team-img img {
+  margin: 0 auto
+}
+
+.team-social {
+  width: 100%;
+  background: #fff;
+  bottom: -22px;
+  -webkit-transition: .3s;
+  transition: .3s;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 16px;
+  position: absolute
+}
+
+.team-social li {
+  display: inline-block;
+  margin-right: 10px
+}
+
+.team-social li:last-child {
+  margin-right: 0
+}
+
+.team-social a {
+  color: #212121;
+  -webkit-transition: .3s;
+  transition: .3s;
+  font-size: 18px
+}
+
+.team-social a:hover {
+  color: #ff7004
+}
+
+.team-single:hover .team-social {
+  bottom: 0;
+  opacity: 1;
+  visibility: visible
+}
+
+.company-logo-single-item.swiper-slide {
+  text-align: center
+}
+
+.team-title {
+  font-size: 14px
+}
+
+.progressbar-section .content .title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-transform: capitalize
+}
+
+.progressbar-section .content .title-desc {
+  line-height: 26px
+}
+
+.skill-progressbar {
+  margin-bottom: 35px
+}
+
+.skill-progressbar:last-child {
+  margin-bottom: 0
+}
