@@ -17,18 +17,18 @@ import AddProduct from './AddProduct';
 
 
 function ShowAll (props){
-    const { productsList, DeleteDB, viewDetail,   } = props
+    const { productsList, DeleteDB, viewDetail, clearUpdate  } = props
     
 
     return(
         
         
         <div className="addproduct-main-area pt-100px pb-100px">
-            <confirmDelete/>
+            {/* <confirmDelete/> */}
             <div className="container">
                 <div class="row showall-title">
                     <h3 className="addproduct-page-title">Our Product</h3>
-                    <Link to='/addproduct' className="add ">Add Product</Link>
+                    <Link to='/addproduct' className="add " onClick={clearUpdate}>Add Product</Link>
                 </div>
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -55,9 +55,9 @@ function ShowAll (props){
                                                         <a href="#"><img className="img-responsive ml-15px" src={product.product_img} alt=""></img></a>
                                                     </td>
                                                     <td className="product-name"><a href="#">{product.product_name}</a></td>
-                                                    <td className="product-price"><span className="amount">{product.product_price}</span></td>
-                                                    <td className="product-saleoff">{`$${product.product_price}`}</td>
-                                                    <td className="product-date">{product.product_date}</td>
+                                                    <td className="product-price"><span className="amount">{`$${product.product_price}`}</span></td>
+                                                    <td className="product-saleoff">{`${product.product_sale}%`}</td>
+                                                    <td className="product-date">{  moment(product.product_date).format("DD/MM/YYYY")}</td>
                                                     <td className="product-remove">
                                                         <Link to='/addproduct' onClick={()=> viewDetail(product._id)}>
                                                         <svg xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" className="bi bi-pencil" viewBox="0 0 16 16">

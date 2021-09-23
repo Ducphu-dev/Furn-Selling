@@ -20,7 +20,6 @@ function Product(props) {
     }
     const list_newproduct = () => {
         const date = moment(product.product_date, "YYYYMMDD").fromNow()
-
         const inforDay = date.split(" ")
         
         if(inforDay[0] < 31 && inforDay[1].includes("days")){

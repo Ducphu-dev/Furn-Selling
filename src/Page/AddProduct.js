@@ -9,8 +9,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 function AddProduct(props){
-    const { ConfigDB ,productadd,detail, product_img,product_date,product_sale,product_name,product_price,product_description, prodcuct_weight,product_dimension,product_material,product_infor,product_amount, } = props
-    console.log(detail)
+    const { add,  ConfigDB ,productadd,detail, product_img,product_date,product_sale,product_name,product_price,product_description, prodcuct_weight,product_dimension,product_material,product_infor,product_amount, } = props
+    // console.log(add)
+    // var someDate = moment(someDateString, "DD/MM/YYYY");
     return(
         <div>
             {
@@ -26,7 +27,7 @@ function AddProduct(props){
                                         <div className="col-lg-12">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Prouct Name</label>
-                                                    <input type="text" onChange={product_name} />
+                                                    <input type="text" onChange={product_name} value={add.product_name}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
@@ -117,31 +118,31 @@ function AddProduct(props){
                                         <div className="col-lg-12">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Prouct Name</label>
-                                                    <input type="text" onChange={product_name} value={product.product_name}/>
+                                                    <input type="text" onChange={product_name} defaultValue={product.product_name || ""}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Price</label>
-                                                    <input type="text" onChange={product_price} value={product.product_price}/>
+                                                    <input type="text" onChange={product_price} defaultValue={product.product_price}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Sale</label>
-                                                    <input type="text" onChange={product_sale} value={product.product_sale}/>
+                                                    <input type="text" onChange={product_sale} defaultValue={product.product_sale}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Date</label>
-                                                    <input type="date" id="date" onChange={product_date} value={product.product_date}/>
+                                                    <input type="date" id="date" onChange={product_date} defaultValue={moment(product.product_date).format("yyyy-MM-DD")}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Description</label>
-                                                    <input className="addproduct-description" placeholder="Description" type="text" onChange={product_description} value={product.product_description}/>
+                                                    <input className="addproduct-description" placeholder="Description" type="text" onChange={product_description} defaultValue={product.product_description}/>
                                                     
                                                 </div>
                                             </div>
@@ -159,35 +160,35 @@ function AddProduct(props){
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Weight</label>
-                                                    <input type="text" onChange={prodcuct_weight} value={product.prodcuct_weight}/>
+                                                    <input type="text" onChange={prodcuct_weight} defaultValue={product.prodcuct_weight}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Amout</label>
-                                                    <input type="text" onChange={product_amount} value={product.product_amount}/>
+                                                    <input type="text" onChange={product_amount} defaultValue={product.product_amount}/>
                                                 </div>
                                             </div>
                                             <div className="col-12">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Marterial</label>
-                                                    <input type="text" onChange={product_material} value={product.product_material}/>
+                                                    <input type="text" onChange={product_material} defaultValue={product.product_material}/>
                                                 </div>
                                             </div>
                                             <div className="col-12">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Dimension</label>
-                                                    <input type="text" onChange={product_dimension} value={product.product_dimension}/>
+                                                    <input type="text" onChange={product_dimension} defaultValue={product.product_dimension}/>
                                                 </div>
                                             </div>
                                             <div className="col-12">
                                                 <div className="addproduct-info mb-20px">
                                                     <label>Information</label>
-                                                    <input type="text" onChange={product_infor} value={product.product_infor}/>
+                                                    <input type="text" onChange={product_infor} defaultValue={product.product_infor}/>
                                                 </div>
                                             </div>
-                                            <Link onClick={()=>ConfigDB()} className="Submitbtn">Update</Link>
-                                            
+                                            <Link  onClick={()=>ConfigDB(product._id)}  className="Submitbtn">Update</Link>
+                                            <Link  to="/showall" className="Submitbtn">Back</Link>
                                         </div>
                                     </div>
                                 </div>

@@ -20,8 +20,9 @@ import Details_page from './Page/Details';
 import CheckOut_Page from './Page/CheckOut';
 import Success_Page from './Page/SuccessCheckOut';
 import Login_Page from './Page/Login';
+import AdminPage from './Page/AdminLogin';
 import Success from './component/Success';
-import confirmDelete from './component/confirmDelete';
+// import confirmDelete from './component/confirmDelete';
 
 import AccountPage from './Page/Account';
 
@@ -161,7 +162,7 @@ class Index extends React.Component {
                 userCard: []
             },
             chooseProduct:[],
-            confirmDelete:false,
+            // confirmDelete:false,
             add:{
                 product_img: "",
                 product_date: "",
@@ -925,10 +926,12 @@ class Index extends React.Component {
         })
     }
     product_name = (e) => {
+      
         this.setState({
             add:{
                 ...this.state.add,
                 product_name: e.target.value
+               
             }
         })
     }
@@ -981,6 +984,7 @@ class Index extends React.Component {
         })
     }
     product_amount = (e) => {
+        
         this.setState({
             add:{
                 ...this.state.add,
@@ -989,7 +993,6 @@ class Index extends React.Component {
         })
     }
     productadd = async () => {
-        console.log(this.state.add)
         await axios 
         .post(`http://localhost:3001/posts` , this.state.add)
                 .then(res => {
@@ -1004,8 +1007,21 @@ class Index extends React.Component {
             detail : productDetails.filter(product => product._id === id),
         },()=>{console.log(this.state.detail)})
     }
-    ConfigDB = () => {
-        console.log()
+    ConfigDB = async (id) => {
+        console.log(id)
+        await axios 
+        .patch(`http://localhost:3001/posts/${id}` , this.state.add)
+        .then(res => {
+            // console.log(res)
+        })
+        .catch(error => { 
+        })
+    }
+
+    clearUpdate  = () => {
+        this.setState({
+            detail : [],
+        },()=>{console.log(this.state.detail)})
     }
 
     
@@ -1400,6 +1416,8 @@ class Index extends React.Component {
                             productsList={productsList}
                             viewDetail={this.viewDetail}
                             DeleteDB={this.DeleteDB}
+                            clearUpdate={this.clearUpdate}
+                            add={this.state.add}
                             />
                         </Route>
                         
@@ -1424,6 +1442,7 @@ class Index extends React.Component {
                             product_infor={this.product_infor}
                             product_amount={this.product_amount}
                             productadd={this.productadd}
+                            add={this.state.add}
                             />
                         </Route>
                         <Route path="/success" >
@@ -1452,6 +1471,13 @@ class Index extends React.Component {
                             <ScrollToTop/>
                             <AccountPage 
                                 btnLogout = {this.isLogout}
+                            />
+                        </Route>
+                        
+                        <Route path="/admin" >
+                            <ScrollToTop/>
+                            <AdminPage 
+                                
                             />
                         </Route>
                         
