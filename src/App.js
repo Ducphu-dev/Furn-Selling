@@ -15,6 +15,7 @@ import Cart_page from './Page/Cart';
 import Contact from './Page/Contact';
 import Aboutus from './Page/Aboutus';
 import ShowAll from './Page/ShowAll';
+import Order from './Page/Order';
 import AddProduct from './Page/AddProduct';
 import Details_page from './Page/Details';
 import CheckOut_Page from './Page/CheckOut';
@@ -48,8 +49,9 @@ import {
     Switch,
     Route,
     Link,
+    useParams,
+    withRouter,
     useRouteMatch,
-    useParams
 } from "react-router-dom";
 
 import React, {useState, useEffect} from 'react';
@@ -1182,7 +1184,7 @@ class Index extends React.Component {
         //   state
         
         const { productsList,detail, products_recommendList, sideShop_isShow, sideNav_isShow, search_isShow, findedIndexViewDetail, amount_product_details, query, amount_product_add, accountOrder,loading,currentPage,postsPerPage,list__recommend, offset,registerAccount,errorMsg, isSuccess,errorLoginMsg, isLogin } = this.state
-        const {errorMsgAdmin ,isAdminLogin} = this.state
+        const { errorMsgAdmin ,isAdminLogin } = this.state
         const filterData = productsList
             // .filter((product) =>
             //     product.product_name.toLowerCase().includes(query.product_name.toLowerCase())
@@ -1564,10 +1566,19 @@ class Index extends React.Component {
                             viewDetail={this.viewDetail}
                             DeleteDB={this.DeleteDB}
                             clearUpdate={this.clearUpdate}
+                            isAdminLogin={isAdminLogin}
                             add={this.state.add}
                             />
                         </Route>
-                        
+                       
+                        <Route path="/order">
+                            <ScrollToTop/>
+                            <Order
+                            productsList={productsList}
+                            viewDetail={this.viewDetail}
+                            DeleteDB={this.DeleteDB}
+                            />
+                        </Route>
                         <Route path="/aboutus">
                             <ScrollToTop/>
                             <Aboutus/>
@@ -1656,9 +1667,10 @@ class Index extends React.Component {
                                     <ul className="footer__list">
                                         <li className="list-items my-2"><a className="" href="">My Account</a></li>
                                         <li className="list-items my-2"><a className="" href="">My Art</a></li>
-                                        <li className="list-items my-2"><a className="" href="">Login</a></li>
+                                        <li className="list-items my-2"><Link to='/admin' className="" href="">Login Admin</Link></li>
                                         <li className="list-items my-2"><a className="" href="">Wishlist</a></li>
                                         <li className="list-items my-2"><a className="" href="">Checkout</a></li>
+                                        
                                     </ul>
                                 </div>
                                 <div className="footer-news col-6 col-lg-3">
