@@ -8,6 +8,8 @@ function AdminPage(props) {
     // funtion
     const {  errorMsgAdmin,AdminName,AdminPassword , btnAdmin, isAdminLogin} = props
     
+    let data = sessionStorage.getItem('admin');
+    console.log(data)
   
     return (
         <div className="login-page admin">
