@@ -213,7 +213,7 @@ class Index extends React.Component {
                 loading: true
             })
             await axios
-            .get("http://localhost:3001/posts")
+            .get("http://localhost:4001/posts")
             .then((res)=>{
                 this.setState({
                     productsList: res.data
@@ -253,7 +253,7 @@ class Index extends React.Component {
             }
         }, () =>
             axios
-                .post("http://localhost:3001/userinfor", accountOrder)
+                .post("http://localhost:4001/userinfor", accountOrder)
                 .then(res => {
                     // console.log(res.data)
                 })
@@ -344,7 +344,7 @@ class Index extends React.Component {
         })
         console.log(this.state.addToCard)
         axios
-            .patch(`http://localhost:3001/users/${id}`, this.state.addToCard)
+            .patch(`http://localhost:4001/users/${id}`, this.state.addToCard)
             .then(res => {
                 // console.log(res)
             })
@@ -713,7 +713,7 @@ class Index extends React.Component {
       
         await axios
         
-        .post("http://localhost:3001/users", registerAccount)
+        .post("http://localhost:4001/users", registerAccount)
         .catch((res)=>{
             if(res.response){
                 if(res.response.data.name) {
@@ -753,7 +753,7 @@ class Index extends React.Component {
         const {loginAccount} = this.state
        
         await axios
-        .post("http://localhost:3001/users/getuser", loginAccount)
+        .post("http://localhost:4001/users/getuser", loginAccount)
         .catch((res) =>{
             console.log( res.response);
             if(res.response){
@@ -897,7 +897,7 @@ class Index extends React.Component {
             
         // }else{
             await axios
-                .delete(`http://localhost:3001/posts/${productID}`)
+                .delete(`http://localhost:4001/posts/${productID}`)
                 .then(res => {
                    
                 })
@@ -1008,7 +1008,7 @@ class Index extends React.Component {
     }
     productadd = async () => {
         await axios 
-        .post(`http://localhost:3001/posts` , this.state.add)
+        .post(`http://localhost:4001/posts` , this.state.add)
                 .then(res => {
                     // console.log(res)
                 })
@@ -1024,7 +1024,7 @@ class Index extends React.Component {
     ConfigDB = async (id) => {
         console.log(id)
         await axios 
-        .patch(`http://localhost:3001/posts/${id}` , this.state.add)
+        .patch(`http://localhost:4001/posts/${id}` , this.state.add)
         .then(res => {
             // console.log(res)
         })
@@ -1124,7 +1124,7 @@ class Index extends React.Component {
         const {loginAdmin} = this.state
        console.log(loginAdmin)
         await axios
-        .post("http://localhost:3001/admin/getadmin", loginAdmin)
+        .post("http://localhost:4001/admin/getadmin", loginAdmin)
         .catch((res) =>{
             if(res.response){
                 if(res.response.data.name){

@@ -7,15 +7,12 @@ import { Link } from 'react-router-dom';
 function AdminPage(props) {
     // funtion
     const {  errorMsgAdmin,AdminName,AdminPassword , btnAdmin, isAdminLogin} = props
-<<<<<<< HEAD
     
     let data = sessionStorage.getItem('admin');
     console.log(data)
   
-=======
     const islogin = sessionStorage.getItem('admin')
     console.log(isAdminLogin)
->>>>>>> a6f9007544bf046ef394eb58e77d101bf9f79830
     return (
         <div className="login-page admin">
             <div className="container">
